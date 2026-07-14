@@ -8,7 +8,7 @@ import { uninstallCommand } from '../src/cli/commands/uninstall.js';
 import { defaultConfig } from '../src/config/schema.js';
 import { writeConfig } from '../src/config/write.js';
 import { installHooks } from '../src/git/hooks.js';
-import { detectHookManager } from '../src/git/integration.js';
+import { detectHookManager, manualIntegration } from '../src/git/integration.js';
 
 const execute = promisify(execFile); const roots: string[] = [];
 afterEach(async () => { vi.restoreAllMocks(); await Promise.all(roots.splice(0).map((root) => rm(root, { recursive: true, force: true }))); });
@@ -24,5 +24,13 @@ describe('lifecycle', () => {
   it('detects framework-managed hook configuration', async () => {
     const root = await mkdtemp(join(tmpdir(), 'git-hooked-manager-')); roots.push(root); await mkdir(join(root, '.husky'));
     await expect(detectHookManager(root)).resolves.toMatchObject({ name: 'Husky' });
+  });
+  it.each([
+    [{ name: 'Husky', marker: '.husky' }, '.husky/pre-push'],
+    [{ name: 'Lefthook', marker: 'lefthook.yml' }, 'commands:'],
+    [{ name: 'pre-commit', marker: '.pre-commit-config.yaml' }, 'stages: [pre-push]'],
+  ])('provides actionable manual integration for $0.name', (manager, expected) => {
+    expect(manualIntegration(manager)).toContain(expected);
+    expect(manualIntegration(manager)).toContain('npx --no-install git-hooked');
   });
 });

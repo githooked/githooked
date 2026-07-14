@@ -17,6 +17,59 @@ git-hooked check pre-push
 
 Initialization creates a `.githooked/` configuration directory and safely adds managed blocks to `.git/hooks/pre-commit` and `.git/hooks/pre-push`. Existing hook content is preserved, and initialization is idempotent.
 
+If the repository already uses Husky, Lefthook, or pre-commit, initialization creates the configuration but leaves that manager's hooks untouched. Install Git Hooked as a project development dependency (`npm install --save-dev @githooked/cli`) and use the manager-specific integration printed by `git-hooked init`.
+
+### Existing hook managers
+
+Husky:
+
+```sh
+# .husky/pre-commit
+npx --no-install git-hooked check pre-commit
+
+# .husky/pre-push
+npx --no-install git-hooked check pre-push "$@"
+```
+
+Lefthook (`lefthook.yml`):
+
+```yaml
+pre-commit:
+  commands:
+    git-hooked:
+      run: npx --no-install git-hooked check pre-commit
+pre-push:
+  commands:
+    git-hooked:
+      run: npx --no-install git-hooked check pre-push
+```
+
+pre-commit (`.pre-commit-config.yaml`):
+
+```yaml
+repos:
+  - repo: local
+    hooks:
+      - id: git-hooked-pre-commit
+        name: Git Hooked pre-commit
+        entry: npx --no-install git-hooked check pre-commit
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+      - id: git-hooked-pre-push
+        name: Git Hooked pre-push
+        entry: npx --no-install git-hooked check pre-push
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+```
+
+Then install both pre-commit stages:
+
+```sh
+pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
 ```text
 .githooked/
 ├── config.yml
