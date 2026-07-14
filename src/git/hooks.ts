@@ -1,0 +1,56 @@
+import { chmod, lstat, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const START = '# >>> git-hooked managed >>>';
+const END = '# <<< git-hooked managed <<<';
+
+function block(hook: string): string {
+  return `${START}\nif [ "\${GIT_HOOKED_SKIP:-}" = "1" ]; then\n  echo "WARNING: Git Hooked check bypassed via GIT_HOOKED_SKIP=1" >&2\nelse\n  git-hooked check ${hook} "$@" || exit $?\nfi\n${END}`;
+}
+
+export function addManagedBlock(content: string, hook: string): string {
+  if (content.includes(START) !== content.includes(END)) throw new Error(`The ${hook} hook contains an incomplete Git Hooked managed block.`);
+  if (content.includes(START)) return content;
+  const prefix = content.length === 0 ? '#!/bin/sh\n' : content.endsWith('\n') ? content : `${content}\n`;
+  return `${prefix}${block(hook)}\n`;
+}
+
+export function removeManagedBlock(content: string): string {
+  const pattern = new RegExp(`\\n?${START.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}[\\s\\S]*?${END.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\n?`);
+  return content.replace(pattern, '\n').replace(/^\n/, '');
+}
+
+async function existing(path: string): Promise<{ content: string; mode: number }> {
+  try {
+    const stats = await lstat(path);
+    if (stats.isSymbolicLink()) throw new Error(`Refusing to modify symlinked Git hook: ${path}`);
+    if (!stats.isFile()) throw new Error(`Git hook is not a regular file: ${path}`);
+    return { content: await readFile(path, 'utf8'), mode: stats.mode & 0o777 };
+  } catch (error) {
+    if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return { content: '', mode: 0o755 };
+    throw error;
+  }
+}
+
+async function atomicWrite(path: string, content: string, mode: number): Promise<void> {
+  const temporary = `${path}.tmp-${process.pid}-${Date.now()}`;
+  try { await writeFile(temporary, content, { encoding: 'utf8', mode: mode | 0o100 }); await rename(temporary, path); await chmod(path, mode | 0o100); }
+  finally { await rm(temporary, { force: true }); }
+}
+
+export async function installHooks(hooksDir: string): Promise<void> {
+  await mkdir(hooksDir, { recursive: true });
+  for (const hook of ['pre-commit', 'pre-push']) {
+    const path = join(hooksDir, hook);
+    const current = await existing(path);
+    await atomicWrite(path, addManagedBlock(current.content, hook), current.mode);
+  }
+}
+
+export async function uninstallHooks(hooksDir: string): Promise<void> {
+  for (const hook of ['pre-commit', 'pre-push']) {
+    const path = join(hooksDir, hook);
+    const current = await existing(path);
+    if (current.content.includes(START)) await atomicWrite(path, removeManagedBlock(current.content), current.mode);
+  }
+}
