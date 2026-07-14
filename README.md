@@ -39,6 +39,28 @@ git-hooked rule add "Every database query must include tenantId"
 
 This creates a check directory and attaches it to `.githooked/hooks/pre-push.yml`.
 
+Repository command checks run from their own check directory and require explicit local trust:
+
+```bash
+git-hooked trust
+```
+
+The complete `.githooked` tree is hashed into local Git configuration. Any manifest, instruction, or script change invalidates that trust. Git Hooked never invokes commands through a shell.
+
+Useful lifecycle commands:
+
+```bash
+git-hooked doctor
+git-hooked doctor --test-agent
+git-hooked fix
+git-hooked uninstall
+git-hooked uninstall --remove-config
+```
+
+Successful semantic reviews are cached privately under `.git/githooked`; unchanged diffs and configuration do not invoke the agent again. The latest completed review is stored there for the explicit `fix` workflow.
+
+When Gitleaks is installed, the default pre-commit checks invoke its official staged scan with secret redaction. If it is unavailable, Git Hooked says so visibly and continues with its built-in `.env` and conflict-marker checks.
+
 Bypass a local hook explicitly with `GIT_HOOKED_SKIP=1 git push`. The bypass is visibly reported and is not presented as a successful review.
 
 ## Development
@@ -51,4 +73,4 @@ npm run lint
 npm run build
 ```
 
-Phase 1 supports Codex review through `codex exec` with a read-only sandbox. Doctor, uninstall CLI wiring, caching, command-check trust, and deliberate fix mode follow in Phase 2.
+Reviews use `codex exec` with an ephemeral read-only sandbox. `fix` is a separate deliberate command and is the only workflow that selects `workspace-write`.

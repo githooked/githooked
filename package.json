@@ -2,6 +2,11 @@
   "name": "git-hooked",
   "version": "0.1.0",
   "description": "Catch bad code before you push using the coding agent you already have.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/githooked/githooked.git" },
+  "homepage": "https://github.com/githooked/githooked#readme",
+  "bugs": { "url": "https://github.com/githooked/githooked/issues" },
+  "keywords": ["git", "hooks", "codex", "code-review", "security"],
   "type": "module",
   "bin": { "git-hooked": "dist/cli/index.js" },
   "files": ["dist", "README.md", "LICENSE"],
@@ -13,7 +18,9 @@
     "test": "vitest run",
     "dev": "tsx src/cli/index.ts",
     "dev:web": "vite web --host 0.0.0.0",
-    "build:web": "vite build web"
+    "build:web": "vite build web",
+    "verify": "npm test && npm run typecheck && npm run lint && npm run build && npm run build:web",
+    "prepack": "npm run verify"
   },
   "dependencies": {
     "chalk": "^5.4.1",

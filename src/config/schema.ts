@@ -41,6 +41,6 @@ export const defaultConfig: GitHookedConfig = configSchema.parse({
 });
 
 export const defaultHooks: Record<'pre-commit' | 'pre-push', HookConfig> = {
-  'pre-commit': { checks: ['builtin:env-files', 'builtin:conflict-markers'] },
+  'pre-commit': { checks: ['builtin:secrets', 'builtin:env-files', 'builtin:conflict-markers'] },
   'pre-push': { checks: ['builtin:security-review', 'builtin:missing-tests'] },
 };

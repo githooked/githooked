@@ -54,3 +54,9 @@ export async function uninstallHooks(hooksDir: string): Promise<void> {
     if (current.content.includes(START)) await atomicWrite(path, removeManagedBlock(current.content), current.mode);
   }
 }
+
+export async function hookStatus(hooksDir: string, hook: 'pre-commit' | 'pre-push'): Promise<'installed' | 'missing' | 'partial'> {
+  const current = await existing(join(hooksDir, hook));
+  const start = current.content.includes(START); const end = current.content.includes(END);
+  return start && end ? 'installed' : start || end ? 'partial' : 'missing';
+}

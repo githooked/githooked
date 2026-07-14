@@ -1,5 +1,6 @@
 export const builtinChecks = {
   'env-files': { kind: 'deterministic' },
+  secrets: { kind: 'deterministic' },
   'conflict-markers': { kind: 'deterministic' },
   'security-review': { kind: 'semantic' },
   'missing-tests': { kind: 'semantic' },

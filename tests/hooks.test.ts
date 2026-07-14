@@ -13,7 +13,7 @@ describe('managed hooks', () => {
     expect(installed).toContain('"$@"');
   });
   it('rejects incomplete managed blocks', () => expect(() => addManagedBlock('# >>> git-hooked managed >>>\n', 'pre-push')).toThrow('incomplete'));
-  it('refuses to follow hook symlinks', async () => {
+  (process.platform === 'win32' ? it.skip : it)('refuses to follow hook symlinks', async () => {
     const root = await mkdtemp(join(tmpdir(), 'git-hooked-hooks-'));
     try {
       const target = join(root, 'target'); await writeFile(target, '#!/bin/sh\n');

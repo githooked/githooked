@@ -27,14 +27,15 @@ describe('project configuration', () => {
     await writeFile(join(directory, '.githooked', 'hooks', 'pre-commit.yml'), 'checks: [builtin:typo]\n');
     await expect(loadProjectConfig(directory)).rejects.toThrow('Unknown built-in check');
   });
-  it('rejects command checks until trust exists', async () => {
+  it('loads command checks without executing them', async () => {
     const directory = await root(); await writeConfig(directory, defaultConfig);
     const checkDirectory = join(directory, '.githooked', 'checks', 'script'); await mkdir(checkDirectory);
     await writeFile(join(checkDirectory, 'check.yml'), 'version: 1\nid: script\nname: Script\ntype: command\ncommand:\n  executable: node\n');
     await writeFile(join(directory, '.githooked', 'hooks', 'pre-push.yml'), 'checks: [check:script]\n');
-    await expect(loadProjectConfig(directory)).rejects.toThrow('trust is implemented');
+    const project = await loadProjectConfig(directory);
+    expect(project.checks.get('script')?.command?.executable).toBe('node');
   });
-  it('rejects instruction symlinks that escape the check directory', async () => {
+  (process.platform === 'win32' ? it.skip : it)('rejects instruction symlinks that escape the check directory', async () => {
     const directory = await root(); await writeConfig(directory, defaultConfig);
     const outside = join(directory, 'outside.md'); await writeFile(outside, 'private');
     const checkDirectory = join(directory, '.githooked', 'checks', 'escape'); await mkdir(checkDirectory);

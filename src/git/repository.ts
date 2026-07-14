@@ -9,7 +9,11 @@ export async function findRepositoryRoot(cwd: string, run: CommandRunner = runCo
 }
 
 export async function getGitDir(root: string, run: CommandRunner = runCommand): Promise<string> {
-  const result = await run('git', ['rev-parse', '--git-path', 'hooks'], { cwd: root, timeout: 10_000 });
-  if (result.exitCode !== 0) throw new Error('Could not locate the Git hooks directory.');
+  return getGitPath(root, 'hooks', run);
+}
+
+export async function getGitPath(root: string, path: string, run: CommandRunner = runCommand): Promise<string> {
+  const result = await run('git', ['rev-parse', '--git-path', path], { cwd: root, timeout: 10_000 });
+  if (result.exitCode !== 0) throw new Error(`Could not locate Git path: ${path}.`);
   return resolve(root, result.stdout.trim());
 }

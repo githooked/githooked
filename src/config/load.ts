@@ -55,7 +55,6 @@ async function loadRepositoryCheck(root: string, id: string): Promise<LoadedRepo
   const directory = join(root, '.githooked', 'checks', id);
   const check = await parseYaml(join(directory, 'check.yml'), repositoryCheckSchema);
   if (check.id !== id) throw new ConfigError(`Check directory ${id} contains manifest id ${check.id}; these must match.`);
-  if (check.type === 'command') throw new ConfigError(`Command check ${id} cannot run until repository trust is implemented.`);
   let instructionsText: string | undefined;
   if (check.instructions) instructionsText = await readFile(await safeChild(directory, check.instructions), 'utf8');
   return { ...check, directory, ...(instructionsText === undefined ? {} : { instructionsText }) };
