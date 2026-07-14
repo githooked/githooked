@@ -9,7 +9,7 @@ Git Hooked is a local, open-source Git hook orchestrator. It does not run an AI 
 Requirements: Node.js 22+, Git, and an authenticated Codex CLI.
 
 ```bash
-npm install --global git-hooked
+npm install --global @githooked/cli
 cd your-repository
 git-hooked init
 git-hooked check pre-push
