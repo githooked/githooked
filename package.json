@@ -6,7 +6,7 @@
   "repository": { "type": "git", "url": "git+https://github.com/githooked/githooked.git" },
   "homepage": "https://github.com/githooked/githooked#readme",
   "bugs": { "url": "https://github.com/githooked/githooked/issues" },
-  "publishConfig": { "access": "public", "provenance": true },
+  "publishConfig": { "access": "public" },
   "keywords": ["git", "hooks", "codex", "code-review", "security"],
   "type": "module",
   "bin": { "git-hooked": "dist/cli/index.js" },
