@@ -1,0 +1,20 @@
+.lucide {
+  width: 1em;
+  height: 1em;
+  stroke-width: 2;
+  vertical-align: -0.14em;
+}
+
+.brand-face .lucide { width: 22px; height: 22px; }
+.button .lucide { color: var(--green); width: 18px; height: 18px; }
+.pill { gap: 7px; align-items: center; }
+.pill .lucide { width: 15px; height: 15px; }
+.agents span { display: inline-flex; align-items: center; gap: 5px; }
+.agents .lucide { width: 14px; height: 14px; }
+.terminal code .lucide { width: 15px; height: 15px; }
+.privacy-note { display: flex; align-items: center; gap: 9px; }
+.privacy-note .lucide { color: #6d9f46; flex: 0 0 auto; }
+.checks > div { display: flex; align-items: center; gap: 4px; }
+.checks > div .lucide { flex: 0 0 auto; }
+.copy .lucide { width: 19px; height: 19px; }
+.benefits b .lucide { display: block; margin: auto; }

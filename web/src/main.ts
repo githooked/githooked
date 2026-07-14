@@ -1,13 +1,20 @@
 import './style.css';
 import './hooky.css';
+import './icons.css';
+import { Bot, Check, CircleCheck, CircleX, Coffee, Copy, createIcons, Download, Gem, Gift, LockKeyhole, Menu, Sparkles, Terminal } from 'lucide';
+
+const renderIcons = () => createIcons({ icons: { Bot, Check, CircleCheck, CircleX, Coffee, Copy, Download, Gem, Gift, LockKeyhole, Menu, Sparkles, Terminal } });
+
+renderIcons();
 
 document.querySelector<HTMLButtonElement>('.menu')?.addEventListener('click', () => document.querySelector('nav')?.classList.toggle('open'));
 
 document.querySelector<HTMLButtonElement>('.copy')?.addEventListener('click', async (event) => {
   await navigator.clipboard.writeText('npx @githooked/cli init');
   const button = event.currentTarget as HTMLButtonElement;
-  button.textContent = '✓';
-  setTimeout(() => { button.textContent = '□'; }, 1500);
+  button.innerHTML = '<i data-lucide="check"></i>';
+  renderIcons();
+  setTimeout(() => { button.innerHTML = '<i data-lucide="copy"></i>'; renderIcons(); }, 1500);
 });
 
 document.querySelector<HTMLButtonElement>('#create-rule')?.addEventListener('click', () => {

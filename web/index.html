@@ -11,22 +11,22 @@
   </head>
   <body>
     <header class="nav wrap">
-      <a class="brand" href="#top" aria-label="Git Hooked home"><span class="brand-face">☕</span><span>git hooked</span></a>
+      <a class="brand" href="#top" aria-label="Git Hooked home"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a>
       <nav aria-label="Main navigation">
         <a href="#how">How it works</a><a href="#rules">Rules</a><a href="#install">Install</a><a href="https://github.com/githooked/githooked">GitHub</a>
       </nav>
-      <a class="button button-small" href="#install"><span>↓</span> Install free</a>
-      <button class="menu" aria-label="Open navigation">☰</button>
+      <a class="button button-small" href="#install"><i data-lucide="download"></i> Install free</a>
+      <button class="menu" aria-label="Open navigation"><i data-lucide="menu"></i></button>
     </header>
 
     <main id="top">
       <section class="hero wrap">
         <div class="hero-copy">
-          <div class="eyebrow pill">🎁 &nbsp; FREE · NO API KEY</div>
+          <div class="eyebrow pill"><i data-lucide="gift"></i> FREE · NO API KEY</div>
           <h1>Catch bad code<br>before you push.</h1>
           <p class="lede">Git hooks powered by the coding agent<br class="desktop"> you already use.</p>
-          <div class="actions"><a class="button" href="#install"><span>↓</span> Install free</a><a class="text-link" href="https://github.com/githooked/githooked">View on GitHub</a></div>
-          <div class="agents"><span>◎ Codex</span><span>✳ Claude Code</span><span>✦ Gemini CLI</span><span>›_ Aider</span></div>
+          <div class="actions"><a class="button" href="#install"><i data-lucide="download"></i> Install free</a><a class="text-link" href="https://github.com/githooked/githooked">View on GitHub</a></div>
+          <div class="agents"><span><i data-lucide="bot"></i> Codex</span><span><i data-lucide="sparkles"></i> Claude Code</span><span><i data-lucide="gem"></i> Gemini CLI</span><span><i data-lucide="terminal"></i> Aider</span></div>
         </div>
         <div class="hero-art">
           <div class="hooky-stage">
@@ -37,7 +37,7 @@
         </div>
         <div class="terminal hero-terminal" aria-label="Example Git Hooked terminal output">
           <div class="traffic"><i></i><i></i><i></i></div>
-          <code><span class="prompt">$ git push</span><br><br>☕ <span class="green">Hooky caught a security issue.</span><br><span class="red">× Booking query is missing tenant isolation</span><br><br><span class="green">[F]</span> Fix with Codex&nbsp;&nbsp; <span class="green">[E]</span> Explain</code>
+          <code><span class="prompt">$ git push</span><br><br><i data-lucide="coffee"></i> <span class="green">Hooky caught a security issue.</span><br><i class="red" data-lucide="circle-x"></i> Booking query is missing tenant isolation<br><br><span class="green">[F]</span> Fix with Codex&nbsp;&nbsp; <span class="green">[E]</span> Explain</code>
         </div>
       </section>
 
@@ -52,7 +52,7 @@
             </ol>
             <div class="terminal config-card"><div class="traffic"><i></i><i></i><i></i><span>.githooked/</span></div><code><span class="green">hooks/pre-commit.yml</span><br>&nbsp; checks:<br>&nbsp;&nbsp;&nbsp; - builtin:env-files<br>&nbsp;&nbsp;&nbsp; - builtin:conflict-markers<br><br><span class="green">hooks/pre-push.yml</span><br>&nbsp; checks:<br>&nbsp;&nbsp;&nbsp; - builtin:security-review<br>&nbsp;&nbsp;&nbsp; - check:tenant-isolation<br><br><span class="green">checks/tenant-isolation/</span><br>&nbsp; check.yml · instructions.md</code></div>
           </div>
-          <div class="privacy-note">☕ &nbsp; Your code goes through your existing agent — not through Git Hooked.</div>
+          <div class="privacy-note"><i data-lucide="lock-keyhole"></i> Your code goes through your existing agent — not through Git Hooked.</div>
         </div>
       </section>
 
@@ -62,7 +62,7 @@
           <div class="rule-builder">
             <div class="rule-input"><label for="rule">Tell Hooky what to check</label><textarea id="rule">Before every push, make sure new API routes require authentication and include tests.</textarea><button class="button" id="create-rule">Create checks</button></div>
             <div class="arrow">→</div>
-            <div class="checks"><strong id="check-count">2 checks created</strong><div>✓ <span>New API routes require authentication</span></div><div>✓ <span>New API routes include tests</span></div><small>Runs automatically on pre-push</small></div>
+            <div class="checks"><strong id="check-count">2 checks created</strong><div><i data-lucide="circle-check"></i> <span>New API routes require authentication</span></div><div><i data-lucide="circle-check"></i> <span>New API routes include tests</span></div><small>Runs automatically on pre-push</small></div>
             <img src="/assets/hooky.png" alt="" class="peek" aria-hidden="true">
           </div>
         </div>
@@ -72,14 +72,14 @@
         <div class="wrap narrow">
           <div class="section-head"><span class="kicker">INSTALL</span><h2>Install in seconds.</h2><p>Free, open source, and no additional API key.</p></div>
           <div class="install-grid">
-            <div class="terminal install-card"><button class="copy" aria-label="Copy installation command">□</button><div class="traffic"><i></i><i></i><i></i></div><code><span class="prompt">$ npx @githooked/cli init</span><br><br><span class="green">✓ Codex detected<br>✓ Pre-commit hook installed<br>✓ Pre-push hook installed</span><br><br>☕ Hooky is watching your repo</code><img src="/assets/hooky.png" alt="Hooky gives a thumbs up"></div>
-            <div class="benefits"><div><b>$0</b><span>$0 forever</span></div><div><b>›_</b><span>Uses your existing<br>AI CLI</span></div><div><b>▢</b><span>Works locally in<br>your repository</span></div><a class="button" href="https://github.com/githooked/githooked#readme"><span>↓</span> View installation guide</a><a class="text-link" href="https://github.com/githooked/githooked">View source on GitHub</a></div>
+            <div class="terminal install-card"><button class="copy" aria-label="Copy installation command"><i data-lucide="copy"></i></button><div class="traffic"><i></i><i></i><i></i></div><code><span class="prompt">$ npx @githooked/cli init</span><br><br><span class="green"><i data-lucide="check"></i> Codex detected<br><i data-lucide="check"></i> Pre-commit hook installed<br><i data-lucide="check"></i> Pre-push hook installed</span><br><br><i data-lucide="coffee"></i> Hooky is watching your repo</code><img src="/assets/hooky.png" alt="Hooky gives a thumbs up"></div>
+            <div class="benefits"><div><b>$0</b><span>$0 forever</span></div><div><b><i data-lucide="terminal"></i></b><span>Uses your existing<br>AI CLI</span></div><div><b><i data-lucide="lock-keyhole"></i></b><span>Works locally in<br>your repository</span></div><a class="button" href="https://github.com/githooked/githooked#readme"><i data-lucide="download"></i> View installation guide</a><a class="text-link" href="https://github.com/githooked/githooked">View source on GitHub</a></div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer><div class="wrap footer-grid"><div><a class="brand" href="#top"><span class="brand-face">☕</span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your own agent.</em></div><div><b>Product</b><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="#install">Documentation</a><a href="#">Changelog</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="#">Contribute</a><a href="#">MIT License</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
+    <footer><div class="wrap footer-grid"><div><a class="brand" href="#top"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your own agent.</em></div><div><b>Product</b><a href="#how">How it works</a><a href="#rules">Rules</a><a href="#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="#install">Documentation</a><a href="#">Changelog</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="#">Contribute</a><a href="#">MIT License</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

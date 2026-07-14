@@ -3,15 +3,36 @@
   "version": "0.1.0",
   "description": "Catch bad code before you push using the coding agent you already have.",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/githooked/githooked.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githooked/githooked.git"
+  },
   "homepage": "https://githooked.github.io/githooked/",
-  "bugs": { "url": "https://github.com/githooked/githooked/issues" },
-  "publishConfig": { "access": "public" },
-  "keywords": ["git", "hooks", "codex", "code-review", "security"],
+  "bugs": {
+    "url": "https://github.com/githooked/githooked/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "codex",
+    "code-review",
+    "security"
+  ],
   "type": "module",
-  "bin": { "git-hooked": "dist/cli/index.js" },
-  "files": ["dist", "README.md", "LICENSE"],
-  "engines": { "node": ">=22" },
+  "bin": {
+    "git-hooked": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
@@ -27,6 +48,7 @@
     "chalk": "^5.4.1",
     "commander": "^14.0.0",
     "execa": "^9.6.0",
+    "lucide": "^1.24.0",
     "minimatch": "^10.0.3",
     "yaml": "^2.8.0",
     "zod": "^3.25.0",
