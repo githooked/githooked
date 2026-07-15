@@ -1,0 +1,29 @@
+schema_version: 1
+version: 1
+id: quality/database
+name: Database quality
+description: Migration safety, transaction boundaries, and correctness of persistent-data queries.
+compatible_config_versions: [1]
+default_hook: pre-push
+applicability:
+  database_clients: [Prisma, Drizzle ORM, Sequelize, Knex, TypeORM, Mongoose, PostgreSQL, MySQL]
+  files: ["**/migrations/**", "**/db/**", "**/repositories/**", "**/schema*"]
+checks:
+  - id: database-migration-safety
+    name: Database migration safety
+    category: correctness
+    severity: high
+    applies_to: ["**/migrations/**/*", "**/schema/**/*", "**/schema.*"]
+    instructions: migration-safety.md
+  - id: database-transaction-boundaries
+    name: Database transaction boundaries
+    category: correctness
+    severity: high
+    applies_to: ["**/db/**/*", "**/repositories/**/*", "**/services/**/*"]
+    instructions: transaction-boundaries.md
+  - id: database-query-correctness
+    name: Database query correctness
+    category: correctness
+    severity: high
+    applies_to: ["**/db/**/*", "**/repositories/**/*", "**/services/**/*"]
+    instructions: query-correctness.md

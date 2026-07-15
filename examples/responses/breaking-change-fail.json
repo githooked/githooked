@@ -1,0 +1,17 @@
+{
+  "status": "fail",
+  "summary": "The public library API contains incompatible changes.",
+  "findings": [
+    {
+      "id": "removed-public-export",
+      "severity": "high",
+      "category": "breaking-change",
+      "title": "Public parseUser export was removed",
+      "explanation": "Existing consumers importing parseUser will fail after this change.",
+      "file": "src/index.ts",
+      "line": 1,
+      "rule": "breaking-changes",
+      "suggestedFix": "Restore the export or release a documented major version."
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Schema migrations must be safe for the repository's deployment model and existing data. Report destructive operations without an explicit migration strategy, non-null additions without safe backfill or defaults, long blocking rewrites, irreversible transformations, and application changes that require an unsafe deployment order.

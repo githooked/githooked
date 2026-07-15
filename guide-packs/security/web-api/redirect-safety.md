@@ -1,0 +1,1 @@
+Redirect targets and callback URLs influenced by users must be restricted to trusted destinations. Report open redirects, unsafe protocol handling, host validation that can be bypassed, and allowlists applied to an unnormalized value.

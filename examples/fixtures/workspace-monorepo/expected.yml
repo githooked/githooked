@@ -1,0 +1,16 @@
+name: workspace-monorepo
+hook: pre-push
+push: upstream
+response: ../../responses/warn.json
+expected:
+  exit_code: 0
+  agent_invoked: true
+  output_includes:
+    - Consider an additional edge-case test
+    - No blocking issues found
+  prompt_includes:
+    - packages/api/src/format.ts
+    - packages/api/src/file with spaces.ts
+    - packages/api/test/format.test.ts
+  prompt_excludes:
+    - packages/web/src/index.ts

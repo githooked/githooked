@@ -1,0 +1,41 @@
+schema_version: 1
+version: 1
+id: security/web-api
+name: Web API security
+description: Authentication, authorization, input validation, secret handling, and redirect safety for web APIs.
+compatible_config_versions: [1]
+default_hook: pre-push
+applicability:
+  frameworks: [Express, Fastify, NestJS, Next.js, Koa, Hono, hapi]
+  files: ["**/routes/**", "**/controllers/**", "**/api/**"]
+checks:
+  - id: web-api-authentication
+    name: Web API authentication
+    category: security
+    severity: critical
+    applies_to: ["**/routes/**/*", "**/controllers/**/*", "**/api/**/*"]
+    instructions: authentication.md
+  - id: web-api-authorization
+    name: Web API authorization
+    category: security
+    severity: critical
+    applies_to: ["**/routes/**/*", "**/controllers/**/*", "**/api/**/*"]
+    instructions: authorization.md
+  - id: web-api-input-validation
+    name: Web API input validation
+    category: security
+    severity: high
+    applies_to: ["**/routes/**/*", "**/controllers/**/*", "**/api/**/*"]
+    instructions: input-validation.md
+  - id: web-api-secret-exposure
+    name: Web API secret exposure
+    category: security
+    severity: critical
+    applies_to: ["**/*"]
+    instructions: secret-exposure.md
+  - id: web-api-redirect-safety
+    name: Web API redirect safety
+    category: security
+    severity: high
+    applies_to: ["**/routes/**/*", "**/controllers/**/*", "**/api/**/*"]
+    instructions: redirect-safety.md

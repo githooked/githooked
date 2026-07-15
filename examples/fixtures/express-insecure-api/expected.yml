@@ -1,0 +1,15 @@
+name: express-insecure-api
+hook: pre-push
+push: upstream
+response: ../../responses/insecure-api-fail.json
+expected:
+  exit_code: 1
+  agent_invoked: true
+  output_includes:
+    - Tenant data can be read without authorization
+    - Authorization behavior has no test
+    - Operation blocked.
+  prompt_includes:
+    - src/routes/accounts.ts
+    - 'check id="security-review"'
+    - 'check id="missing-tests"'

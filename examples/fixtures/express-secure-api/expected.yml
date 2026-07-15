@@ -1,0 +1,14 @@
+name: express-secure-api
+hook: pre-push
+push: new-branch
+response: ../../responses/pass.json
+expected:
+  exit_code: 0
+  agent_invoked: true
+  output_includes:
+    - New branch has no remote merge base; reviewing its complete tree.
+    - Semantic review completed
+    - No blocking issues found
+  prompt_includes:
+    - src/routes/accounts.ts
+    - test/accounts.test.ts

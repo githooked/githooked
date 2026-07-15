@@ -1,0 +1,28 @@
+{
+  "status": "fail",
+  "summary": "The route exposes tenant data without authorization and has no regression test.",
+  "findings": [
+    {
+      "id": "tenant-data-exposure",
+      "severity": "critical",
+      "category": "security",
+      "title": "Tenant data can be read without authorization",
+      "explanation": "The new account route trusts a request parameter and does not authenticate or scope the database query.",
+      "file": "src/routes/accounts.ts",
+      "line": 4,
+      "rule": "security-review",
+      "suggestedFix": "Authenticate the caller and scope the lookup to the authenticated tenant."
+    },
+    {
+      "id": "missing-route-tests",
+      "severity": "high",
+      "category": "testing",
+      "title": "Authorization behavior has no test",
+      "explanation": "No test covers unauthenticated or cross-tenant access for the new route.",
+      "file": "src/routes/accounts.ts",
+      "line": 3,
+      "rule": "missing-tests",
+      "suggestedFix": "Add rejection tests for unauthenticated and cross-tenant requests."
+    }
+  ]
+}

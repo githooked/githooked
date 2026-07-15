@@ -1,0 +1,1 @@
+Request parameters, bodies, headers, and uploaded content must be validated before they influence database queries, filesystem paths, redirects, templates, or external requests. Report missing structural validation, unsafe coercion, and validation that occurs after a dangerous sink.

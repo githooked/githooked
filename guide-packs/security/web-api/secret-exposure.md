@@ -1,0 +1,1 @@
+Changes must not expose secrets, credentials, session tokens, private keys, or sensitive configuration through source code, logs, errors, API responses, or client bundles. Report concrete exposure paths in the diff; do not report placeholder values or documented examples as real secrets without evidence.

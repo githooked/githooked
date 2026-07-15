@@ -1,0 +1,24 @@
+{
+  "summary": "The recorded repository review found a tenant-isolation policy worth enforcing.",
+  "proposals": [
+    {
+      "id": "tenant-isolation",
+      "name": "Tenant isolation",
+      "focus": "database",
+      "rule": "Every tenant-owned database query must be scoped to the authenticated tenant identifier.",
+      "rationale": "Authenticated tenant context and tenant-owned account records are both present.",
+      "evidence": [
+        {
+          "path": "src/routes/accounts.ts",
+          "detail": "The account route performs a database lookup."
+        }
+      ],
+      "severity": "high",
+      "applies_to": [
+        "src/routes/**/*.ts",
+        "src/db/**/*.ts"
+      ],
+      "confidence": 0.95
+    }
+  ]
+}

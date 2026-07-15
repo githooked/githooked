@@ -1,0 +1,1 @@
+Payment creation, capture, refund, webhook, and retry workflows must be idempotent across process restarts and concurrent requests. Report missing or unstable idempotency keys, check-then-write races, and retries that can create duplicate financial effects.

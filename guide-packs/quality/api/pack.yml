@@ -1,0 +1,22 @@
+schema_version: 1
+version: 1
+id: quality/api
+name: API quality
+description: Public contract compatibility and focused regression-test expectations for API changes.
+compatible_config_versions: [1]
+default_hook: pre-push
+applicability:
+  files: ["**/api/**", "**/routes/**", "**/controllers/**", "**/openapi*", "**/schema*"]
+checks:
+  - id: api-contract-compatibility
+    name: API contract compatibility
+    category: breaking-change
+    severity: high
+    applies_to: ["**/api/**/*", "**/routes/**/*", "**/controllers/**/*", "**/openapi*", "**/schema*"]
+    instructions: contract-compatibility.md
+  - id: api-behavior-tests
+    name: API behavior tests
+    category: testing
+    severity: high
+    applies_to: ["**/api/**/*", "**/routes/**/*", "**/controllers/**/*", "**/test/**/*", "**/tests/**/*"]
+    instructions: behavior-tests.md

@@ -1,0 +1,1 @@
+Cache keys, memoized values, background-job payloads, and shared in-memory state containing tenant data must include a stable tenant boundary. Report keys or shared state that can return one tenant's values to another tenant or continue using data after the tenant context changes.

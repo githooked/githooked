@@ -27,6 +27,8 @@
   },
   "files": [
     "dist",
+    "guide-packs",
+    "docs/GUIDE_PACKS.md",
     "README.md",
     "LICENSE"
   ],
@@ -37,7 +39,10 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest run tests",
+    "test:examples": "vitest run tests/examples.test.ts",
+    "test:hook-managers": "cross-env GIT_HOOKED_MANAGER_INTEGRATION=1 vitest run tests/hook-managers.test.ts",
+    "test:codex": "vitest run tests/codex.test.ts",
     "dev": "tsx src/cli/index.ts",
     "dev:web": "vite web --host 0.0.0.0",
     "build:web": "vite build web",
@@ -57,7 +62,9 @@
   "devDependencies": {
     "@eslint/js": "^9.31.0",
     "@types/node": "^22.16.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.31.0",
+    "husky": "^9.1.7",
     "tsx": "^4.20.0",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.37.0",

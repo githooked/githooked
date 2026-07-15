@@ -1,0 +1,1 @@
+Public API changes must preserve documented request and response contracts unless the diff explicitly implements a deliberate versioned breaking change. Report removed fields or endpoints, newly required inputs, narrowed accepted values, changed status semantics, and incompatible type or error-shape changes.

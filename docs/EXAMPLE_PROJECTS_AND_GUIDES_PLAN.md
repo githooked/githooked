@@ -107,30 +107,33 @@ Each pack should declare its version, compatible Git Hooked configuration versio
 
 ### Phase A — confidence harness
 
-- Add the six example fixtures and expected-results manifests.
-- Add a reusable temporary-repository harness.
-- Automate native Git and hook-manager workflows.
-- Publish test artifacts when a fixture fails.
+- [x] Add the six example fixtures and expected-results manifests.
+- [x] Add a reusable temporary-repository harness.
+- [x] Automate native Git and hook-manager workflows.
+- [x] Publish test artifacts when a fixture fails.
+- [x] Publish four replayable example repositories under the Git Hooked organization.
 
-Acceptance: all deterministic scenarios pass on the cross-platform CI matrix and malformed agent output never passes a review.
+Acceptance: all deterministic scenarios pass on the cross-platform CI matrix and malformed agent output never passes a review. Implemented by `npm run test:examples`, the Ubuntu-only `npm run test:hook-managers` job, and the opt-in `GIT_HOOKED_CODEX_INTEGRATION=1 npm run test:codex` suite.
+
+The public scenarios cover an [insecure Express API](https://github.com/githooked/example-express-insecure-api), its [secure counterpart](https://github.com/githooked/example-express-secure-api), a [TypeScript public-API break](https://github.com/githooked/example-typescript-breaking-change), and an [npm workspace monorepo](https://github.com/githooked/example-workspace-monorepo).
 
 ### Phase B — security proposal engine
 
-- Add repository fingerprinting and bounded context selection.
-- Define and validate the proposal schema with Zod.
-- Add `setup security --dry-run` with recorded-agent tests.
-- Add interactive approval and configuration writes.
+- [x] Add repository fingerprinting and bounded context selection.
+- [x] Define and validate the proposal schema with Zod.
+- [x] Add `setup security --dry-run` with recorded-agent tests.
+- [x] Add interactive approval and configuration writes.
 
-Acceptance: setup makes no changes in dry-run/review mode, never executes agent-suggested commands, avoids duplicate rules, and produces valid existing check files after approval.
+Acceptance: setup makes no changes to `.githooked` in dry-run/review mode, never executes agent-suggested commands, avoids duplicate rules, and produces valid existing check files after approval. Covered by the setup, fingerprinting, proposal-schema, and Codex adapter tests.
 
 ### Phase C — curated guides
 
-- Define the guide-pack schema and local registry.
-- Ship the initial packs with snapshot tests.
-- Add list, inspect, add, and remove commands.
-- Document authoring and review expectations.
+- [x] Define the guide-pack schema and local registry.
+- [x] Ship the initial packs with snapshot tests.
+- [x] Add list, inspect, add, and remove commands.
+- [x] Document authoring and review expectations.
 
-Acceptance: guide installation and removal are idempotent, preserve user-owned checks, and show a complete change preview.
+Acceptance: guide installation and removal are idempotent, preserve user-owned and locally modified checks, and show a complete change preview. Covered by the guide registry snapshot and lifecycle tests.
 
 ### Phase D — real-world beta
 

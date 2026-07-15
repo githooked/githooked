@@ -1,0 +1,1 @@
+Tenant-owned objects must be authorized against the authenticated tenant before their existence or contents are disclosed and before any mutation occurs. Report cross-tenant references, indirect object access, and relationship changes that accept objects from another tenant.

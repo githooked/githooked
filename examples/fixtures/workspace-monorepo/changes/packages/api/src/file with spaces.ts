@@ -1,0 +1,1 @@
+export const fixtureWithSpaces = true;

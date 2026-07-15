@@ -1,0 +1,1 @@
+Every read, update, delete, aggregate, and uniqueness check involving tenant-owned data must be scoped with the authenticated tenant identifier at the query boundary. Report lookups that rely only on a caller-supplied object ID or apply tenant filtering after data has already been fetched.

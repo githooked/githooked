@@ -1,0 +1,29 @@
+schema_version: 1
+version: 1
+id: security/multi-tenant
+name: Multi-tenant security
+description: Tenant-aware authorization, query scoping, cache isolation, and cross-tenant access prevention.
+compatible_config_versions: [1]
+default_hook: pre-push
+applicability:
+  database_clients: [Prisma, Drizzle ORM, Sequelize, Knex, TypeORM, Mongoose, PostgreSQL, MySQL]
+  files: ["**/routes/**", "**/services/**", "**/db/**"]
+checks:
+  - id: multi-tenant-query-scoping
+    name: Multi-tenant query scoping
+    category: security
+    severity: critical
+    applies_to: ["**/routes/**/*", "**/services/**/*", "**/db/**/*", "**/repositories/**/*"]
+    instructions: query-scoping.md
+  - id: multi-tenant-object-authorization
+    name: Multi-tenant object authorization
+    category: security
+    severity: critical
+    applies_to: ["**/routes/**/*", "**/controllers/**/*", "**/services/**/*"]
+    instructions: object-authorization.md
+  - id: multi-tenant-cache-isolation
+    name: Multi-tenant cache isolation
+    category: security
+    severity: high
+    applies_to: ["**/cache/**/*", "**/services/**/*", "**/repositories/**/*"]
+    instructions: cache-isolation.md

@@ -1,0 +1,15 @@
+name: typescript-library-breaking-change
+hook: pre-push
+push: upstream
+response: ../../responses/breaking-change-fail.json
+checks:
+  - builtin:breaking-changes
+expected:
+  exit_code: 1
+  agent_invoked: true
+  output_includes:
+    - Public parseUser export was removed
+    - Operation blocked.
+  prompt_includes:
+    - src/index.ts
+    - 'check id="breaking-changes"'

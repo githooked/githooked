@@ -1,0 +1,18 @@
+name: large-diff
+hook: pre-push
+push: upstream
+response: ../../responses/malformed.txt
+agent_error: block
+generate:
+  - path: src/generated.ts
+    bytes: 220000
+expected:
+  exit_code: 1
+  agent_invoked: true
+  output_includes:
+    - Analysis is partial
+    - Agent review error
+    - malformed JSON
+    - Operation blocked.
+  prompt_includes:
+    - 'untrusted-diff partial="true"'
