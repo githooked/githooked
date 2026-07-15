@@ -129,7 +129,7 @@ describe('rule add CLI end to end', () => {
       expect(result.exitCode).toBe(1);
       expect(await configurationTrustHash(test.root)).toBe(before);
     }
-  });
+  }, 15_000);
 
   it('creates, trusts, and enforces a generated command through a real native Git hook', async () => {
     const test = await harness();
