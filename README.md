@@ -84,23 +84,37 @@ pre-commit install --hook-type pre-commit --hook-type pre-push
         └── instructions.md
 ```
 
-Hook files reference either shipped checks such as `builtin:env-files` or repository checks such as `check:tenant-isolation`. Semantic checks own an `instructions.md`. Command-check manifests are reserved for the future and are rejected until an explicit local trust mechanism is implemented.
+Hook files reference either shipped checks such as `builtin:env-files` or repository checks such as `check:tenant-isolation`. Repository checks can be semantic agent reviews or explicitly trusted local commands.
 
-Add a semantic repository check with:
+Plan a repository rule with the configured coding agent:
 
 ```bash
 git-hooked rule add "Every database query must include tenantId"
 ```
 
-This creates a check directory and attaches it to `.githooked/hooks/pre-push.yml`.
+The agent receives the requested rule, enabled checks, and the same bounded repository context used by guided security setup. It runs in an isolated read-only directory and returns a validated plan. Git Hooked asks focused clarification questions when the policy cannot be inferred safely.
 
-Repository command checks run from their own check directory and require explicit local trust:
+Depending on the rule, the plan can be:
+
+- already covered by an enabled check;
+- a semantic check evaluated by the coding agent on relevant diffs;
+- a deterministic `check.mjs` command check; or
+- a hybrid whose deterministic check runs before semantic review.
+
+Use `--dry-run` to inspect the plan without writing configuration. `--yes` skips the final creation prompt but never trusts generated executable code:
+
+```bash
+git-hooked rule add "Public APIs must not expose internal IDs" --dry-run
+git-hooked rule add "Public APIs must not expose internal IDs" --yes
+```
+
+Before writing, Git Hooked shows the selected hook, severity, applicability globs, evidence, semantic instructions, and any complete generated script. Generated scripts are syntax-checked but not executed or trusted. Review command checks, then explicitly trust the current configuration:
 
 ```bash
 git-hooked trust
 ```
 
-The complete `.githooked` tree is hashed into local Git configuration. Any manifest, instruction, or script change invalidates that trust. Git Hooked never invokes commands through a shell.
+The complete `.githooked` tree is hashed into local Git configuration. Any manifest, instruction, or script change invalidates that trust. Commands run directly from their own check directory without a shell.
 
 Useful lifecycle commands:
 
@@ -188,5 +202,7 @@ Run the opt-in live Codex check only from a trusted development checkout:
 ```bash
 GIT_HOOKED_CODEX_INTEGRATION=1 npm run test:codex
 ```
+
+See [Rule planner production verification](docs/RULE_PLANNER_TESTING.md) for the tested behavior, security invariants, and remaining release risks.
 
 Reviews use `codex exec` with an ephemeral read-only sandbox. `fix` is a separate deliberate command and is the only workflow that selects `workspace-write`.

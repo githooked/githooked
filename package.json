@@ -29,6 +29,7 @@
     "dist",
     "guide-packs",
     "docs/GUIDE_PACKS.md",
+    "docs/RULE_PLANNER_TESTING.md",
     "README.md",
     "LICENSE"
   ],
@@ -42,7 +43,7 @@
     "test": "vitest run tests",
     "test:examples": "vitest run tests/examples.test.ts",
     "test:hook-managers": "cross-env GIT_HOOKED_MANAGER_INTEGRATION=1 vitest run tests/hook-managers.test.ts",
-    "test:codex": "vitest run tests/codex.test.ts",
+    "test:codex": "vitest run tests/codex.test.ts tests/rule-live.test.ts",
     "dev": "tsx src/cli/index.ts",
     "dev:web": "vite web --host 0.0.0.0",
     "build:web": "vite build web",

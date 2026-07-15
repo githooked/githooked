@@ -6,12 +6,15 @@ import type { CommandRunner } from '../core/process.js';
 import { runCommand } from '../core/process.js';
 import { buildReviewPrompt } from '../review/prompt.js';
 import { agentReviewResultSchema, normalizeAgentResult, type ReviewResult } from '../review/result.js';
+import { buildRulePlanPrompt } from '../rules/prompt.js';
+import { rulePlanResultSchema, type RulePlanInput, type RulePlanResult } from '../rules/plan.js';
 import { buildSecurityProposalPrompt } from '../setup/prompt.js';
 import { securityProposalResultSchema, type SecurityProposalInput, type SecurityProposalResult } from '../setup/proposal.js';
 import type { AgentAdapter, AgentDetectionResult, FixInput, FixResult, ReviewInput } from './types.js';
 
 const reviewSchema = JSON.stringify(zodToJsonSchema(agentReviewResultSchema, { $refStrategy: 'none', target: 'jsonSchema7' }));
 const proposalSchema = JSON.stringify(zodToJsonSchema(securityProposalResultSchema, { $refStrategy: 'none', target: 'jsonSchema7' }));
+const rulePlanSchema = JSON.stringify(zodToJsonSchema(rulePlanResultSchema, { $refStrategy: 'none', target: 'jsonSchema7' }));
 
 export class CodexAdapter implements AgentAdapter {
   readonly id = 'codex'; readonly displayName = 'Codex';
@@ -45,10 +48,10 @@ export class CodexAdapter implements AgentAdapter {
       });
       if (result.exitCode !== 0) {
         const detail = result.stderr.trim().split('\n').slice(-12).join('\n').slice(-2_000);
-        throw new Error(`Codex review failed (exit ${result.exitCode}): ${detail}`);
+        throw new Error(`Codex operation failed (exit ${result.exitCode}): ${detail}`);
       }
       let parsed: unknown;
-      try { parsed = JSON.parse(result.stdout); } catch { throw new Error('Codex returned malformed JSON; review was not considered successful.'); }
+      try { parsed = JSON.parse(result.stdout); } catch { throw new Error('Codex returned malformed JSON; the operation was not considered successful.'); }
       return parsed;
     } finally {
       await rm(directory, { recursive: true, force: true });
@@ -57,6 +60,10 @@ export class CodexAdapter implements AgentAdapter {
   async review(input: ReviewInput): Promise<ReviewResult> {
     const parsed = await this.structured(buildReviewPrompt(input), reviewSchema, input.timeoutMs);
     return normalizeAgentResult(agentReviewResultSchema.parse(parsed));
+  }
+  async planRule(input: RulePlanInput): Promise<RulePlanResult> {
+    const parsed = await this.structured(buildRulePlanPrompt(input), rulePlanSchema, input.timeoutMs, true);
+    return rulePlanResultSchema.parse(parsed).result;
   }
   async proposeSecurity(input: SecurityProposalInput): Promise<SecurityProposalResult> {
     const parsed = await this.structured(buildSecurityProposalPrompt(input), proposalSchema, input.timeoutMs, true);

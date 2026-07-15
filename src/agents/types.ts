@@ -1,4 +1,5 @@
 import type { ReviewResult } from '../review/result.js';
+import type { RulePlanInput, RulePlanResult } from '../rules/plan.js';
 import type { SecurityProposalInput, SecurityProposalResult } from '../setup/proposal.js';
 
 export interface AgentDetectionResult { available: boolean; version?: string; error?: string }
@@ -13,6 +14,7 @@ export interface AgentAdapter {
   id: string; displayName: string;
   detect(): Promise<AgentDetectionResult>;
   review(input: ReviewInput): Promise<ReviewResult>;
+  planRule(input: RulePlanInput): Promise<RulePlanResult>;
   proposeSecurity(input: SecurityProposalInput): Promise<SecurityProposalResult>;
   fix(input: FixInput): Promise<FixResult>;
 }

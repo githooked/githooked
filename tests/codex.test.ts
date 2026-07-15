@@ -64,5 +64,5 @@ describe('Codex adapter', () => {
       files: ['a.ts'], checks: [check], partial: false, timeoutMs: 120_000,
     });
     expect(result.status).toMatch(/pass|warn|fail/);
-  });
+  }, 150_000);
 });

@@ -34,7 +34,9 @@ export async function checkCommand(hook: HookName, cwd = process.cwd(), remoteNa
   const deterministicIds = builtinChecks.filter((id) => builtinKind(id) === 'deterministic');
   const deterministicResult = await runDeterministicChecks(root, diff, deterministicIds);
   const deterministic = deterministicResult.findings;
-  const commandChecks = references.filter((item) => item.startsWith('check:')).map((item) => project.checks.get(item.slice('check:'.length))).filter(isCommandCheck);
+  const commandChecks = references.filter((item) => item.startsWith('check:'))
+    .map((item) => project.checks.get(item.slice('check:'.length))).filter(isCommandCheck)
+    .filter((check) => diff.files.some((file) => check.applies_to.some((pattern) => minimatch(file, pattern, { dot: true }))));
   if (commandChecks.length && !await commandChecksTrusted(root)) throw new Error('Repository command checks are untrusted or changed. Review them, then run `git-hooked trust`.');
   for (const check of commandChecks) {
     const commandResult = await runCommand(check.command.executable, check.command.args, { cwd: check.directory, timeout: check.command.timeout_ms });
