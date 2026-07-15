@@ -37,7 +37,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web/tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run tests",
     "test:examples": "vitest run tests/examples.test.ts",
