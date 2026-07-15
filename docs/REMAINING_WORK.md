@@ -28,7 +28,7 @@ Why: npm reports `0.1.0` as published, but the Git repository currently has no c
 
 ### Correct and complete command-check documentation
 
-- [ ] Remove the stale README sentence saying command checks are reserved for the future and rejected.
+- [x] Remove the stale README sentence saying command checks are reserved for the future and rejected.
 - [ ] Add an authoring section for command checks: manifest fields, working directory, timeouts, direct executable invocation, and the no-shell guarantee.
 - [ ] Explain the local trust lifecycle: `git-hooked trust`, full `.githooked/` hashing, invalidation after any change, and appropriate use of `--yes` in automation.
 - [ ] Add a small auditable command-check example and its expected failure output.

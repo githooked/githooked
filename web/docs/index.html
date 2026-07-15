@@ -115,12 +115,13 @@ git-hooked check pre-push</code></pre>
           <section id="custom-rules" class="doc-section">
             <span class="doc-step">05</span>
             <h2>Add a repository rule</h2>
-            <p>Turn a plain-language expectation into a versioned semantic check. New rules are attached to pre-push by default.</p>
+            <p>Give Git Hooked a plain-language policy. Codex analyzes bounded repository context in isolated read-only mode, asks focused questions when needed, and recommends an existing, semantic, deterministic, or hybrid implementation.</p>
             <div class="code-block">
               <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy custom-rule command"><i data-lucide="copy"></i><span>Copy</span></button></div>
-              <pre><code>git-hooked rule add "Every database query must include tenantId"</code></pre>
+              <pre><code>git-hooked rule add "Every database query must include tenantId" --dry-run
+git-hooked rule add "Every database query must include tenantId"</code></pre>
             </div>
-            <p>The command creates a new directory under <code>.githooked/checks/</code> with a <code>check.yml</code> manifest and editable <code>instructions.md</code>. Commit both so the whole team receives the same rule.</p>
+            <p>Before writing, Git Hooked previews the hook, severity, file globs, evidence, instructions, and any generated script. Generated command checks remain untrusted and cannot run until you inspect them and run <code>git-hooked trust</code>. Commit the resulting <code>.githooked/</code> files so the whole team receives the same auditable rule.</p>
           </section>
 
           <section id="guide-packs" class="doc-section">

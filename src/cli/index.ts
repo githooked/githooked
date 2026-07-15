@@ -2,7 +2,7 @@
 import { Command } from 'commander';
 import { checkCommand } from './commands/check.js';
 import { initCommand } from './commands/init.js';
-import { addRuleCommand } from './commands/rule.js';
+import { addRuleCommand, type AddRuleOptions } from './commands/rule-add.js';
 import { doctorCommand } from './commands/doctor.js';
 import { uninstallCommand } from './commands/uninstall.js';
 import { VERSION } from '../core/version.js';
@@ -24,7 +24,11 @@ program.command('check').description('Run checks for a Git hook').argument('<hoo
   if (hook !== 'pre-commit' && hook !== 'pre-push') throw new Error('Hook must be pre-commit or pre-push.');
   process.exitCode = await checkCommand(hook, process.cwd(), remoteName, hook === 'pre-push' ? await readStdin() : '');
 });
-program.command('rule').description('Manage repository rules').command('add').argument('<rule>').action(async (rule: string) => addRuleCommand(rule));
+program.command('rule').description('Manage repository rules').command('add')
+  .argument('<rule>')
+  .option('--dry-run', 'plan and preview without changing .githooked configuration')
+  .option('--yes', 'create the planned rule without interactive approval')
+  .action(async (rule: string, options: AddRuleOptions) => { process.exitCode = await addRuleCommand(rule, options); });
 program.command('doctor').description('Diagnose this repository and agent').option('--test-agent', 'run a basic read-only agent invocation').action(async (options: { testAgent?: boolean }) => { process.exitCode = await doctorCommand(Boolean(options.testAgent)); });
 program.command('uninstall').description('Remove managed hook entries').option('--remove-config', 'also remove .githooked configuration').action(async (options: { removeConfig?: boolean }) => uninstallCommand(Boolean(options.removeConfig)));
 program.command('fix').description('Explicitly fix findings from the most recent review').action(async () => { process.exitCode = await fixCommand(); });
