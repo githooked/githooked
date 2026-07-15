@@ -1,4 +1,4 @@
-import { access, readdir, rename, rm, writeFile } from 'node:fs/promises';
+import { access, readdir, realpath, rename, rm, writeFile } from 'node:fs/promises';
 import { stdin, stdout } from 'node:process';
 import { createInterface } from 'node:readline/promises';
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path';
@@ -97,10 +97,20 @@ async function atomicOutput(path: string, value: unknown): Promise<void> {
   finally { await rm(temporary, { force: true }); }
 }
 
-function outputPath(cwd: string, root: string, value: string): string {
-  const path = resolve(cwd, value);
-  const configRelative = relative(join(root, '.githooked'), path);
-  if (configRelative === '' || (!configRelative.startsWith('..') && !isAbsolute(configRelative))) {
+function isWithin(parent: string, path: string): boolean {
+  const child = relative(parent, path);
+  return child === '' || (!child.startsWith('..') && !isAbsolute(child));
+}
+
+async function outputPath(cwd: string, root: string, value: string): Promise<string> {
+  const [canonicalCwd, canonicalRoot] = await Promise.all([realpath(cwd), realpath(root)]);
+  const requested = resolve(canonicalCwd, value);
+  const configEntry = join(canonicalRoot, '.githooked');
+  if (isWithin(configEntry, requested)) throw new ConfigError('--output must not write inside .githooked.');
+
+  const [directory, configRoot] = await Promise.all([realpath(dirname(requested)), realpath(configEntry)]);
+  const path = join(directory, basename(requested));
+  if (isWithin(configRoot, path)) {
     throw new ConfigError('--output must not write inside .githooked.');
   }
   return path;
@@ -117,7 +127,7 @@ export async function setupSecurityCommand(
   const project = await loadProjectConfig(root);
   const maxProposals = parseMaximum(options.maxProposals);
   const focus = parseFocus(options.focus);
-  const proposalOutputPath = options.output ? outputPath(cwd, root, options.output) : undefined;
+  const proposalOutputPath = options.output ? await outputPath(cwd, root, options.output) : undefined;
   const context = await discoverRepository(root);
   const existingChecks = await configuredChecks(root, project);
   const input: SecurityProposalInput = { context, existingChecks, focus, maxProposals, timeoutMs: project.config.agent.timeout_ms };
