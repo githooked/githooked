@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const severitySchema = z.enum(['info', 'low', 'medium', 'high', 'critical']);
-export const providerSchema = z.enum(['auto', 'codex']);
+export const providerSchema = z.enum(['auto', 'codex', 'claude', 'gemini', 'copilot', 'cursor']);
 export const checkReferenceSchema = z.string().regex(/^(builtin|check):[a-z0-9][a-z0-9-]*$/, 'Use `builtin:<id>` or `check:<id>`.');
 export const hookConfigSchema = z.object({ checks: z.array(checkReferenceSchema) }).strict();
 

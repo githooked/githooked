@@ -46,7 +46,7 @@ The automated tests verify:
 
 ## Security invariants
 
-Planner output is untrusted. Git Hooked validates the complete response before showing or writing a plan. Codex planning runs in an isolated read-only directory with bounded context. Generated scripts are displayed and syntax-checked, but are neither executed during creation nor trusted automatically. A user must explicitly run `git-hooked trust`; any later `.githooked` change invalidates that trust.
+Planner output is untrusted. Git Hooked validates the complete response before showing or writing a plan. Agent planning runs in an isolated directory with bounded context and no repository access. Generated scripts are displayed and syntax-checked, but are neither executed during creation nor trusted automatically. A user must explicitly run `git-hooked trust`; any later `.githooked` change invalidates that trust.
 
 ## Remaining release risks
 

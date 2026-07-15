@@ -8,7 +8,7 @@ Git Hooked is a local, open-source Git hook orchestrator. It does not run an AI 
 
 ## Two-minute setup
 
-Requirements: Node.js 22+, Git, and an authenticated Codex CLI.
+Requirements: Node.js 22+, Git, and at least one authenticated supported agent CLI: Codex, Claude Code, Gemini CLI, GitHub Copilot CLI, or Cursor Agent.
 
 ```bash
 npm install --global @githooked/cli
@@ -18,6 +18,8 @@ git-hooked check pre-push
 ```
 
 Initialization creates a `.githooked/` configuration directory and safely adds managed blocks to `.git/hooks/pre-commit` and `.git/hooks/pre-push`. Existing hook content is preserved, and initialization is idempotent.
+
+Agent provider defaults to `auto`, which checks the supported CLIs in the order listed above and uses the first available one. Pin a provider with `agent.provider` in `.githooked/config.yml`; accepted values are `auto`, `codex`, `claude`, `gemini`, `copilot`, and `cursor`.
 
 If the repository already uses Husky, Lefthook, or pre-commit, initialization creates the configuration but leaves that manager's hooks untouched. Install Git Hooked as a project development dependency (`npm install --save-dev @githooked/cli`) and use the manager-specific integration printed by `git-hooked init`.
 
@@ -152,7 +154,7 @@ git-hooked setup security --dry-run
 git-hooked setup security --focus auth,database --max-proposals 5
 ```
 
-Discovery runs locally first. Codex receives detected technologies, up to 400 repository paths, selected configuration files, existing checks, and small relevant source excerpts in read-only mode. Sensitive files such as `.env`, private keys, credentials, dependency directories, and build output are excluded.
+Discovery runs locally first. The configured agent receives detected technologies, up to 400 repository paths, selected configuration files, existing checks, and small relevant source excerpts in an isolated run. Sensitive files such as `.env`, private keys, credentials, dependency directories, and build output are excluded.
 
 Interactive mode presents each proposal, its evidence, confidence, and exact file changes before asking for approval. Approved proposals become ordinary auditable semantic checks under `.githooked/checks/` and are attached to pre-push. Dry-run and non-interactive modes never modify `.githooked` configuration.
 

@@ -4,6 +4,25 @@
   padding-top: 4px;
 }
 
+.agent-list {
+  gap: 7px;
+}
+
+.agent-list span {
+  gap: 7px;
+  padding: 8px 11px;
+  font-weight: 700;
+}
+
+.agent-list span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 3px #72db3820;
+}
+
 .terminal-example > span {
   display: flex;
   align-items: center;

@@ -30,7 +30,7 @@
           <ul>
             <li><i data-lucide="check"></i> Node.js 22 or newer</li>
             <li><i data-lucide="check"></i> Git</li>
-            <li><i data-lucide="check"></i> An authenticated Codex CLI</li>
+            <li><i data-lucide="check"></i> Codex, Claude Code, Gemini, Copilot, or Cursor CLI</li>
           </ul>
           <p>No Git Hooked account or additional API key.</p>
         </div>
@@ -78,7 +78,7 @@ git-hooked check pre-push</code></pre>
             </div>
             <div class="split-notes">
               <div><i data-lucide="zap"></i><strong>Pre-commit</strong><p>Fast deterministic checks for secrets, environment files, and conflict markers.</p></div>
-              <div><i data-lucide="bot"></i><strong>Pre-push</strong><p>Deeper semantic review for security issues and missing tests using Codex.</p></div>
+              <div><i data-lucide="bot"></i><strong>Pre-push</strong><p>Deeper semantic review for security issues and missing tests using your configured agent.</p></div>
             </div>
           </section>
 
@@ -88,7 +88,7 @@ git-hooked check pre-push</code></pre>
             <p>Work normally. Git Hooked collects the relevant staged or outgoing diff, runs only the configured checks, and reports findings in the terminal.</p>
             <ol class="workflow-list">
               <li><span>1</span><div><strong>Commit</strong><p>Fast local checks catch mechanical mistakes before they enter history.</p></div></li>
-              <li><span>2</span><div><strong>Push</strong><p>Codex reviews the outgoing change in an ephemeral read-only sandbox.</p></div></li>
+              <li><span>2</span><div><strong>Push</strong><p>Your configured agent reviews the bounded outgoing change in an isolated run.</p></div></li>
               <li><span>3</span><div><strong>Resolve</strong><p>Fix blocking findings yourself, or deliberately run <code>git-hooked fix</code> for the latest completed review.</p></div></li>
               <li><span>4</span><div><strong>Push again</strong><p>Successful unchanged semantic reviews are reused from the repository’s private Git cache.</p></div></li>
             </ol>
@@ -113,7 +113,7 @@ git-hooked check pre-push</code></pre>
           <section id="custom-rules" class="doc-section">
             <span class="doc-step">05</span>
             <h2>Add a repository rule</h2>
-            <p>Give Git Hooked a plain-language policy. Codex analyzes bounded repository context in isolated read-only mode, asks focused questions when needed, and recommends an existing, semantic, deterministic, or hybrid implementation.</p>
+            <p>Give Git Hooked a plain-language policy. Your configured agent analyzes bounded repository context in an isolated run, asks focused questions when needed, and recommends an existing, semantic, deterministic, or hybrid implementation.</p>
             <div class="code-block">
               <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy custom-rule command"><i data-lucide="copy"></i><span>Copy</span></button></div>
               <pre><code>git-hooked rule add "Every database query must include tenantId" --dry-run
@@ -138,7 +138,7 @@ git-hooked guide add security/multi-tenant</code></pre>
           <section id="security-setup" class="doc-section">
             <span class="doc-step">07</span>
             <h2>Discover repository-specific security rules</h2>
-            <p>Guided setup maps the repository locally, then asks Codex for a bounded set of proposals. Start with dry-run mode to review the evidence and exact file changes.</p>
+            <p>Guided setup maps the repository locally, then asks your configured agent for a bounded set of proposals. Start with dry-run mode to review the evidence and exact file changes.</p>
             <div class="code-block">
               <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy guided-setup commands"><i data-lucide="copy"></i><span>Copy</span></button></div>
               <pre><code>git-hooked setup security --dry-run
@@ -164,7 +164,7 @@ git-hooked setup security --focus auth,database --max-proposals 5</code></pre>
             <h2>Diagnose, repair, or remove</h2>
             <div class="command-list">
               <div><code>git-hooked doctor</code><span>Check the repository, configuration, hooks, and agent.</span></div>
-              <div><code>git-hooked doctor --test-agent</code><span>Also run a basic read-only Codex invocation.</span></div>
+              <div><code>git-hooked doctor --test-agent</code><span>Also run a basic isolated invocation with the configured agent.</span></div>
               <div><code>git-hooked fix</code><span>Deliberately fix findings from the latest completed review.</span></div>
               <div><code>git-hooked uninstall</code><span>Remove managed hook blocks and keep configuration.</span></div>
               <div><code>git-hooked uninstall --remove-config</code><span>Remove managed hooks and the configuration directory.</span></div>
@@ -180,7 +180,7 @@ git-hooked setup security --focus auth,database --max-proposals 5</code></pre>
       </div>
     </main>
 
-    <footer><div class="wrap footer-grid"><div><a class="brand" href="../"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your Codex CLI.</em></div><div><b>Product</b><a href="./">Documentation</a><a href="../library/">Check library</a><a href="../#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="https://github.com/githooked/githooked/releases">Releases</a><a href="https://github.com/githooked/githooked/blob/main/LICENSE">MIT License</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="https://github.com/githooked/githooked/pulls">Contribute</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
+    <footer><div class="wrap footer-grid"><div><a class="brand" href="../"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your agent CLI.</em></div><div><b>Product</b><a href="./">Documentation</a><a href="../library/">Check library</a><a href="../#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="https://github.com/githooked/githooked/releases">Releases</a><a href="https://github.com/githooked/githooked/blob/main/LICENSE">MIT License</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="https://github.com/githooked/githooked/pulls">Contribute</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
     <script type="module" src="/src/docs.ts"></script>
   </body>
 </html>

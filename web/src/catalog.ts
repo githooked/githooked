@@ -58,7 +58,7 @@ export const builtinChecks: BuiltinCheck[] = [
   {
     id: 'security-review',
     name: 'Security review',
-    description: 'Asks Codex to find exploitable security problems introduced by the outgoing diff.',
+    description: 'Asks your configured coding agent to find exploitable security problems introduced by the outgoing diff.',
     kind: 'semantic',
     category: 'security',
     severity: 'agent-assessed',

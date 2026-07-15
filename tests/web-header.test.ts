@@ -32,6 +32,7 @@ describe('shared website header', () => {
     expect(html.indexOf('id="install"')).toBeLessThan(html.indexOf('id="how"'));
     expect(html.indexOf('id="rules"')).toBeLessThan(html.indexOf('id="use"'));
     expect(html).toContain('Checks run automatically.');
+    for (const agent of ['Codex', 'Claude Code', 'Gemini CLI', 'Copilot CLI', 'Cursor Agent']) expect(html).toContain(agent);
     expect(html).toContain('npx @githooked/cli init');
     expect(html).toContain('&lt;user creates src/api.ts&gt;');
     expect(html).toContain('git add src/api.ts');

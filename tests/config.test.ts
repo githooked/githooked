@@ -13,5 +13,5 @@ describe('config schema', () => {
     expect(result.success).toBe(false);
     if (!result.success) expect(result.error.issues[0]?.path).toEqual(['agent', 'provider']);
   });
-  it('rejects providers without implemented adapters', () => expect(configSchema.safeParse({ version: 1, agent: { provider: 'gemini' } }).success).toBe(false));
+  it.each(['codex', 'claude', 'gemini', 'copilot', 'cursor'])('accepts the implemented %s provider', (provider) => expect(configSchema.safeParse({ version: 1, agent: { provider } }).success).toBe(true));
 });

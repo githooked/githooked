@@ -9,9 +9,10 @@ import { detectHookManager, manualIntegration } from '../../git/integration.js';
 
 export async function initCommand(cwd = process.cwd()): Promise<void> {
   const root = await findRepositoryRoot(cwd);
-  const codex = createAgentRegistry(root)[0]!;
-  const detection = await codex.detect();
-  console.log(detection.available ? `✓ Codex detected${detection.version ? ` (${detection.version})` : ''}` : '⚠ Codex CLI not detected');
+  const detections = await Promise.all(createAgentRegistry(root).map(async (agent) => ({ agent, detection: await agent.detect() })));
+  const available = detections.filter(({ detection }) => detection.available);
+  if (available.length) console.log(`✓ Coding agent${available.length === 1 ? '' : 's'} detected: ${available.map(({ agent }) => agent.displayName).join(', ')}`);
+  else console.log('⚠ No supported coding-agent CLI detected');
   const manager = await detectHookManager(root);
   const created = await ensureConfig(root, defaultConfig);
   await loadProjectConfig(root);
