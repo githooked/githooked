@@ -1,0 +1,34 @@
+.brand-face {
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  border: 1px solid #1a1d1b;
+  background: #dfffc9;
+  box-shadow: 0 2px 0 #0002;
+}
+
+.brand-logo {
+  display: block;
+  width: 52px;
+  max-width: none;
+  height: 52px;
+  object-fit: contain;
+  transform: rotate(5deg) translate(-1px, -1px);
+}
+
+footer .brand-face {
+  border-color: #626a64;
+  background: #dfffc9;
+}
+
+@media (max-width: 440px) {
+  .brand-face {
+    width: 42px;
+    height: 42px;
+  }
+
+  .brand-logo {
+    width: 48px;
+    height: 48px;
+  }
+}

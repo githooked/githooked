@@ -1,11 +1,14 @@
 import './style.css';
 import './hooky.css';
 import './icons.css';
+import './header.css';
 import { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, createIcons, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } from 'lucide';
 import { bindNavigation } from './site';
+import { mountSiteHeader } from './header';
 
 const renderIcons = () => createIcons({ icons: { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } });
 
+mountSiteHeader('home');
 renderIcons();
 bindNavigation();
 

@@ -1,16 +1,18 @@
 import './style.css';
 import './icons.css';
 import './pages.css';
+import './header.css';
 import {
-  ArrowRight, Bot, Check, Coffee, Copy, createIcons, Menu, PackageOpen, Search, Terminal, Zap,
+  ArrowRight, Bot, Check, Copy, createIcons, Menu, PackageOpen, Search, Terminal, Zap,
 } from 'lucide';
 import { builtinChecks, guidePacks, type BuiltinCheck, type GuidePack } from './catalog';
 import { bindCopyButtons, bindNavigation } from './site';
+import { mountSiteHeader } from './header';
 
 type CatalogFilter = 'all' | 'security' | 'quality' | 'deterministic' | 'semantic';
 
 const renderIcons = (): void => createIcons({
-  icons: { ArrowRight, Bot, Check, Coffee, Copy, Menu, PackageOpen, Search, Terminal, Zap },
+  icons: { ArrowRight, Bot, Check, Copy, Menu, PackageOpen, Search, Terminal, Zap },
 });
 
 function builtinCard(check: BuiltinCheck): string {
@@ -59,6 +61,7 @@ const guideGrid = document.querySelector<HTMLElement>('#guide-grid');
 if (builtinGrid) builtinGrid.innerHTML = builtinChecks.map(builtinCard).join('');
 if (guideGrid) guideGrid.innerHTML = guidePacks.map(guideCard).join('');
 
+mountSiteHeader('library');
 renderIcons();
 bindNavigation();
 bindCopyButtons(renderIcons);
