@@ -145,6 +145,117 @@
   font-weight: 800;
 }
 
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.workflow-card {
+  position: relative;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fffaf5;
+  box-shadow: 0 9px 24px #3b2a1d12;
+}
+
+.workflow-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -18px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: #4d9e29;
+  font-weight: 800;
+}
+
+.workflow-heading {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  min-height: 92px;
+}
+
+.workflow-heading > span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--deep);
+  color: var(--green);
+  font: 600 12px 'DM Mono', monospace;
+}
+
+.workflow-heading strong,
+.workflow-heading p {
+  display: block;
+}
+
+.workflow-heading strong {
+  margin: 2px 0 6px;
+  font-size: 15px;
+}
+
+.workflow-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.workflow-terminal {
+  min-height: 245px;
+  padding: 18px 17px 20px;
+  border-radius: 11px;
+  box-shadow: none;
+}
+
+.workflow-terminal code {
+  display: grid;
+  gap: 12px;
+  padding-top: 7px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.workflow-terminal code > span {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.workflow-success,
+.workflow-running {
+  color: #a0e950;
+}
+
+.workflow-error {
+  color: #ff746a;
+  font-weight: 600;
+}
+
+.workflow-path {
+  color: #9a9e99;
+}
+
+.workflow-option {
+  color: #f1eee8;
+}
+
+.workflow-card-alert {
+  border-color: #d7c3b4;
+}
+
 @media (max-width: 800px) {
   .terminal-example {
     gap: 13px;
@@ -156,5 +267,26 @@
 
   .rule-command {
     padding: 20px 17px 23px;
+  }
+
+  .workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-card:not(:last-child)::after {
+    content: "↓";
+    top: auto;
+    right: 50%;
+    bottom: -18px;
+    transform: translateX(50%);
+  }
+
+  .workflow-heading {
+    min-height: 0;
+    margin-bottom: 16px;
+  }
+
+  .workflow-terminal {
+    min-height: 0;
   }
 }

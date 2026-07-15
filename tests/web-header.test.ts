@@ -21,6 +21,7 @@ describe('shared website header', () => {
       const html = await readFile(path, 'utf8');
       expect(html).toContain('<link rel="stylesheet" href="/src/style.css">');
       expect(html).toContain('<link rel="stylesheet" href="/src/header.css">');
+      expect(html).toContain('<link rel="icon" type="image/png" href="%BASE_URL%favicon.png">');
       expect(html).toContain('<header class="nav wrap" data-site-header data-base="%BASE_URL%"></header>');
       expect(html).not.toContain('<nav aria-label="Main navigation">');
     }
@@ -28,8 +29,16 @@ describe('shared website header', () => {
 
   it('shows concrete secret blocking and rule creation examples on the homepage', async () => {
     const html = await readFile('web/index.html', 'utf8');
+    expect(html.indexOf('id="install"')).toBeLessThan(html.indexOf('id="how"'));
+    expect(html.indexOf('id="rules"')).toBeLessThan(html.indexOf('id="use"'));
+    expect(html).toContain('Checks run automatically.');
+    expect(html).toContain('npx @githooked/cli init');
+    expect(html).toContain('&lt;user creates src/api.ts&gt;');
+    expect(html).toContain('git add src/api.ts');
+    expect(html).toContain('accessToken exposed in API response');
+    expect(html).not.toContain('hooks/pre-commit.yml');
     expect(html).toContain('git add .env &amp;&amp; git commit');
-    expect(html).toContain('.env cannot be committed');
+    expect(html).toContain("Are you mad?! You're trying to commit a .env file!");
     expect(html).toContain('builtin:env-files');
     expect(html).toContain('git-hooked rule add');
     expect(html).toContain('Preview &amp; approve');

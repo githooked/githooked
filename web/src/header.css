@@ -9,11 +9,10 @@
 
 .brand-logo {
   display: block;
-  width: 52px;
+  width: 36px;
   max-width: none;
-  height: 52px;
+  height: 36px;
   object-fit: contain;
-  transform: rotate(5deg) translate(-1px, -1px);
 }
 .github-nav {
   display: inline-grid;
@@ -39,7 +38,7 @@ footer .brand-face {
   }
 
   .brand-logo {
-    width: 48px;
-    height: 48px;
+    width: 33px;
+    height: 33px;
   }
 }
