@@ -33,10 +33,12 @@ describe('shared website header', () => {
     expect(html.indexOf('id="rules"')).toBeLessThan(html.indexOf('id="use"'));
     expect(html).toContain('Checks run automatically.');
     for (const agent of ['Codex', 'Claude Code', 'Gemini CLI', 'Copilot CLI', 'Cursor Agent']) expect(html).toContain(agent);
+    expect(html).toContain('Coding agent detected: Codex');
     expect(html).toContain('npx @githooked/cli init');
     expect(html).toContain('&lt;user creates src/api.ts&gt;');
     expect(html).toContain('git add src/api.ts');
     expect(html).toContain('accessToken exposed in API response');
+    for (const image of ['hooky-install.png', 'hooky-detective.png', 'hooky-docs.png']) expect(html).toContain(image);
     expect(html).not.toContain('hooks/pre-commit.yml');
     expect(html).toContain('git add .env &amp;&amp; git commit');
     expect(html).toContain("Are you mad?! You're trying to commit a .env file!");

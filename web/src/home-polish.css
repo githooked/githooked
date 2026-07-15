@@ -23,6 +23,95 @@
   box-shadow: 0 0 0 3px #72db3820;
 }
 
+.scroll-hooky {
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.install-card .hooky-install {
+  position: absolute;
+  z-index: 2;
+  bottom: -66px;
+  right: -55px;
+  left: auto;
+  width: 225px;
+  max-width: none;
+  transform: translateY(120px) rotate(-18deg) scale(.72);
+  filter: drop-shadow(0 15px 10px #0004);
+}
+
+.install-card .hooky-install.is-visible {
+  animation: hooky-install-pop .9s cubic-bezier(.2, 1.3, .35, 1) forwards;
+}
+
+.rules-section,
+.resources-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.resources-section {
+  padding-bottom: 275px;
+}
+
+.rules-section > .wrap,
+.resources-section > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.section-hooky {
+  position: absolute;
+  z-index: 2;
+  max-width: none;
+  filter: drop-shadow(0 14px 10px #3b2a1d25);
+}
+
+.hooky-detective {
+  right: max(-95px, calc(50% - 700px));
+  bottom: 5px;
+  width: 285px;
+  transform: translateX(150px) rotate(12deg);
+}
+
+.hooky-detective.is-visible {
+  animation: hooky-detective-peek 1s cubic-bezier(.2, 1.2, .35, 1) .12s forwards;
+}
+
+.hooky-docs {
+  bottom: 25px;
+  left: 50%;
+  margin-left: -165px;
+  width: 330px;
+  transform: translateY(190px) rotate(-8deg);
+}
+
+.hooky-docs.is-visible {
+  animation: hooky-docs-burst 1.05s cubic-bezier(.2, 1.25, .35, 1) .1s forwards;
+}
+
+@keyframes hooky-install-pop {
+  0% { opacity: 0; transform: translateY(120px) rotate(-18deg) scale(.72); }
+  68% { opacity: 1; transform: translateY(-8px) rotate(5deg) scale(1.04); }
+  82% { transform: translateY(2px) rotate(-3deg) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@keyframes hooky-detective-peek {
+  0% { opacity: 0; transform: translateX(150px) rotate(12deg); }
+  65% { opacity: 1; transform: translateX(-10px) rotate(-4deg); }
+  82% { transform: translateX(4px) rotate(2deg); }
+  100% { opacity: 1; transform: translateX(0) rotate(0); }
+}
+
+@keyframes hooky-docs-burst {
+  0% { opacity: 0; transform: translateY(190px) rotate(-8deg); }
+  62% { opacity: 1; transform: translateY(-14px) rotate(4deg); }
+  80% { transform: translateY(5px) rotate(-2deg); }
+  100% { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
 .terminal-example > span {
   display: flex;
   align-items: center;
@@ -307,5 +396,32 @@
 
   .workflow-terminal {
     min-height: 0;
+  }
+
+  .hooky-detective,
+  .hooky-docs {
+    width: 190px;
+    opacity: .22;
+  }
+
+  .hooky-detective { right: -75px; }
+  .resources-section { padding-bottom: 210px; }
+  .hooky-docs {
+    left: 50%;
+    margin-left: -115px;
+    width: 230px;
+  }
+
+  .install-card .hooky-install {
+    right: -40px;
+    width: 175px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hooky {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
   }
 }

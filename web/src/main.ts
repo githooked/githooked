@@ -27,3 +27,19 @@ if (hooky && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     hooky.style.setProperty('--look-y', `${(y * 4).toFixed(2)}px`);
   }, { passive: true });
 }
+
+const scrollHookies = document.querySelectorAll<HTMLElement>('.scroll-hooky');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (reducedMotion || !('IntersectionObserver' in window)) {
+  scrollHookies.forEach((character) => character.classList.add('is-visible'));
+} else {
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0 });
+  scrollHookies.forEach((character) => observer.observe(character));
+}
