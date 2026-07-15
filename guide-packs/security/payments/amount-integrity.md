@@ -1,0 +1,1 @@
+Amounts, currencies, recipients, and payable line items must be derived from trusted server-side state and represented without floating-point loss. Report client-controlled totals, currency mismatches, rounding inconsistencies, integer unit confusion, and changes that allow charged and recorded amounts to diverge.

@@ -24,6 +24,29 @@ describe('Codex adapter', () => {
     expect(result.success).toBe(true);
     expect(run).toHaveBeenCalledWith('codex', expect.arrayContaining(['--sandbox', 'workspace-write']), expect.anything());
   });
+  it('requests security proposals with bounded context in read-only mode', async () => {
+    const proposal = {
+      summary: 'one proposal',
+      proposals: [{
+        id: 'tenant-isolation', name: 'Tenant isolation', focus: 'database',
+        rule: 'Every tenant query must use the authenticated tenant identifier.',
+        rationale: 'Authenticated tenant context and tenant data access are both present.',
+        evidence: [{ path: 'src/routes/a.ts', detail: 'A route reads tenant data.' }],
+        severity: 'high', applies_to: ['src/routes/**/*.ts'], confidence: 0.9,
+      }],
+    };
+    const run: CommandRunner = vi.fn().mockResolvedValue({ stdout: JSON.stringify(proposal), stderr: '', exitCode: 0 });
+    const result = await new CodexAdapter(run).proposeSecurity({
+      context: {
+        fingerprint: { languages: [{ name: 'TypeScript', files: 1 }], frameworks: ['Express'], packageManagers: ['npm'], databaseClients: ['Prisma'], authenticationLibraries: [], testTools: [], apiEntryPoints: ['src/routes/a.ts'] },
+        repositoryMap: { files: ['src/routes/a.ts'], scannedFiles: 1, truncated: false },
+        selectedFiles: [{ path: 'src/routes/a.ts', content: 'export const route = true;', truncated: false }],
+      },
+      existingChecks: [], focus: ['database'], maxProposals: 3, timeoutMs: 1_000,
+    });
+    expect(result.proposals[0]?.id).toBe('tenant-isolation');
+    expect(run).toHaveBeenCalledWith('codex', expect.arrayContaining(['--sandbox', 'read-only']), expect.objectContaining({ input: expect.stringContaining('untrusted-repository-context') }));
+  });
   it.skipIf(process.env.GIT_HOOKED_CODEX_INTEGRATION !== '1')('completes a real read-only structured review', async () => {
     const result = await new CodexAdapter(undefined, process.cwd()).review({
       diff: 'diff --git a/a.ts b/a.ts\n--- /dev/null\n+++ b/a.ts\n@@ -0,0 +1 @@\n+export const answer = 42;',

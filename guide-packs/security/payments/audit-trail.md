@@ -1,0 +1,1 @@
+Every material payment state transition must leave a durable, attributable record containing the operation identity, actor or trusted source, previous and next state, amount and currency where relevant, and provider identifiers. Report destructive updates or error paths that make financial effects unauditable.

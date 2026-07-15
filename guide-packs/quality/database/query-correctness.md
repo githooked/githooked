@@ -1,0 +1,1 @@
+Database queries must preserve the intended cardinality, filtering, ordering, and concurrency behavior. Report missing scope predicates, non-deterministic single-row selection, incorrect joins, lost-update races, and read-modify-write changes that require locking or atomic database operations.

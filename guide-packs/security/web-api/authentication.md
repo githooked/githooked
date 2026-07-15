@@ -1,0 +1,1 @@
+Every non-public endpoint must establish an authenticated caller before reading protected data or performing a protected action. Report routes that omit authentication, trust caller identity from request-controlled fields, or apply authentication only after sensitive work has begun. Do not flag endpoints that are explicitly documented and implemented as public.

@@ -1,0 +1,1 @@
+Every protected operation must authorize the authenticated caller for the specific resource and action. Authentication alone is not sufficient. Report missing ownership, role, permission, or policy checks, including object identifiers that allow horizontal or vertical privilege escalation.

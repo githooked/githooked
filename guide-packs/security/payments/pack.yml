@@ -1,0 +1,34 @@
+schema_version: 1
+version: 1
+id: security/payments
+name: Payments security
+description: Idempotency, amount integrity, authorization, and durable auditability for payment workflows.
+compatible_config_versions: [1]
+default_hook: pre-push
+applicability:
+  files: ["**/payments/**", "**/billing/**", "**/checkout/**", "**/webhooks/**"]
+checks:
+  - id: payments-idempotency
+    name: Payment idempotency
+    category: correctness
+    severity: critical
+    applies_to: ["**/payments/**/*", "**/billing/**/*", "**/checkout/**/*", "**/webhooks/**/*"]
+    instructions: idempotency.md
+  - id: payments-amount-integrity
+    name: Payment amount integrity
+    category: security
+    severity: critical
+    applies_to: ["**/payments/**/*", "**/billing/**/*", "**/checkout/**/*"]
+    instructions: amount-integrity.md
+  - id: payments-authorization
+    name: Payment authorization
+    category: security
+    severity: critical
+    applies_to: ["**/payments/**/*", "**/billing/**/*", "**/checkout/**/*", "**/webhooks/**/*"]
+    instructions: authorization.md
+  - id: payments-audit-trail
+    name: Payment audit trail
+    category: correctness
+    severity: high
+    applies_to: ["**/payments/**/*", "**/billing/**/*", "**/checkout/**/*", "**/webhooks/**/*"]
+    instructions: audit-trail.md

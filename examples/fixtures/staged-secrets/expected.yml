@@ -1,0 +1,11 @@
+name: staged-secrets
+hook: pre-commit
+gitleaks: leak
+expected:
+  exit_code: 1
+  agent_invoked: false
+  output_includes:
+    - Environment file staged
+    - Merge-conflict marker added
+    - Gitleaks detected a potential secret
+    - Operation blocked.

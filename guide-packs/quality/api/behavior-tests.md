@@ -1,0 +1,1 @@
+Changed API behavior must include focused automated tests for the affected success, validation, authorization, and error paths. Report substantive route or contract changes with no relevant test change, while accepting existing parameterized coverage when the diff clearly remains covered.

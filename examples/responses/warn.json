@@ -1,0 +1,17 @@
+{
+  "status": "warn",
+  "summary": "The changed package is valid, with one non-blocking observation.",
+  "findings": [
+    {
+      "id": "workspace-note",
+      "severity": "low",
+      "category": "testing",
+      "title": "Consider an additional edge-case test",
+      "explanation": "The primary behavior is covered; an empty-input case could improve coverage.",
+      "file": "packages/api/src/format.ts",
+      "line": 2,
+      "rule": "missing-tests",
+      "suggestedFix": null
+    }
+  ]
+}

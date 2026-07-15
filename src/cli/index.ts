@@ -8,6 +8,8 @@ import { uninstallCommand } from './commands/uninstall.js';
 import { VERSION } from '../core/version.js';
 import { fixCommand } from './commands/fix.js';
 import { trustCommand } from './commands/trust.js';
+import { setupSecurityCommand, type SetupSecurityOptions } from './commands/setup-security.js';
+import { guideAddCommand, guideInspectCommand, guideListCommand, guideRemoveCommand } from './commands/guide.js';
 
 async function readStdin(): Promise<string> {
   if (process.stdin.isTTY) return '';
@@ -27,4 +29,17 @@ program.command('doctor').description('Diagnose this repository and agent').opti
 program.command('uninstall').description('Remove managed hook entries').option('--remove-config', 'also remove .githooked configuration').action(async (options: { removeConfig?: boolean }) => uninstallCommand(Boolean(options.removeConfig)));
 program.command('fix').description('Explicitly fix findings from the most recent review').action(async () => { process.exitCode = await fixCommand(); });
 program.command('trust').description('Trust the current repository command checks').option('--yes', 'trust without an interactive confirmation').action(async (options: { yes?: boolean }) => { process.exitCode = await trustCommand(Boolean(options.yes)); });
+program.command('setup').description('Propose repository-specific setup').command('security')
+  .description('Inspect this repository and propose semantic security checks')
+  .option('--dry-run', 'show proposals without changing .githooked configuration')
+  .option('--non-interactive', 'review proposals without prompting or changing .githooked configuration')
+  .option('--output <path>', 'write the structured proposal report as JSON')
+  .option('--focus <areas>', 'comma-separated focus areas such as auth,database')
+  .option('--max-proposals <count>', 'maximum proposals from 1 to 20', '5')
+  .action(async (options: SetupSecurityOptions) => { process.exitCode = await setupSecurityCommand(options); });
+const guide = program.command('guide').description('Manage curated local guide packs');
+guide.command('list').description('List available guide packs').action(async () => { process.exitCode = await guideListCommand(); });
+guide.command('inspect').description('Inspect a guide pack').argument('<id>').action(async (id: string) => { process.exitCode = await guideInspectCommand(id); });
+guide.command('add').description('Install a guide pack').argument('<id>').option('--yes', 'install without an interactive confirmation').action(async (id: string, options: { yes?: boolean }) => { process.exitCode = await guideAddCommand(id, Boolean(options.yes)); });
+guide.command('remove').description('Remove an unmodified installed guide pack').argument('<id>').option('--yes', 'remove without an interactive confirmation').action(async (id: string, options: { yes?: boolean }) => { process.exitCode = await guideRemoveCommand(id, Boolean(options.yes)); });
 program.parseAsync().catch((error: unknown) => { console.error(`✗ ${error instanceof Error ? error.message : String(error)}`); process.exitCode = 1; });

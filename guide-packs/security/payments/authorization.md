@@ -1,0 +1,1 @@
+Payment, billing, refund, payout, and saved-instrument operations must be authorized for the authenticated account and intended resource. Webhook state changes must also verify provider authenticity. Report missing ownership checks, privilege checks, or signature verification.

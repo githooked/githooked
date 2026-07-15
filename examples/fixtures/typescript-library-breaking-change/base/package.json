@@ -1,0 +1,6 @@
+{
+  "name": "typescript-library-breaking-change-fixture",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts"
+}

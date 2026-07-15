@@ -1,0 +1,1 @@
+Operations that must succeed or fail as one logical unit must share an appropriate database transaction, including related writes and consistency-sensitive reads. Report partial-update paths, external side effects incorrectly assumed to roll back, and transactions held across slow or unreliable network operations.
