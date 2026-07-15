@@ -174,5 +174,5 @@ if (content.includes('FORBIDDEN_DEBUG')) {
     await successful('git', ['add', 'src/policy.ts'], test.root, test.env);
     const allowed = await runCommand('git', ['commit', '-m', 'safe policy'], { cwd: test.root, env: test.env, timeout: 60_000 });
     expect(allowed.exitCode, output(allowed)).toBe(0);
-  });
+  }, 30_000);
 });

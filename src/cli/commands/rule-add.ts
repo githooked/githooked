@@ -1,6 +1,5 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
-import { join, relative } from 'node:path';
 import { resolveAgent } from '../../agents/registry.js';
 import { builtinChecks } from '../../checks/registry.js';
 import { ConfigError, loadProjectConfig, type ProjectConfig } from '../../config/load.js';
@@ -111,7 +110,7 @@ function showPlan(root: string, plan: Extract<RulePlanResult, { status: 'ready' 
   console.log('\nProposed changes:');
   for (let index = 0; index < ids.length; index += 1) {
     const id = ids[index]!;
-    const directory = relative(root, join(root, '.githooked', 'checks', id));
+    const directory = `.githooked/checks/${id}`;
     const contentFile = implementation.kind === 'semantic' || (implementation.kind === 'hybrid' && index === 1)
       ? 'instructions.md' : implementation.command.script.filename;
     console.log(`  ${directory}/check.yml`);
