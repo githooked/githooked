@@ -22,13 +22,26 @@ export class CodexAdapter implements AgentAdapter {
       return result.exitCode === 0 ? { available: true, version: result.stdout.trim() } : { available: false, error: result.stderr.trim() };
     } catch { return { available: false, error: 'Codex CLI is not installed or is not on PATH.' }; }
   }
-  private async structured(prompt: string, outputSchema: string, timeoutMs: number): Promise<unknown> {
+  private async structured(prompt: string, outputSchema: string, timeoutMs: number, isolated = false): Promise<unknown> {
     const directory = await mkdtemp(join(tmpdir(), 'git-hooked-'));
     const schemaPath = join(directory, 'review-schema.json');
+    const executionCwd = isolated ? directory : this.cwd;
+    const args = ['exec', '--ephemeral', '--sandbox', 'read-only'];
+    if (isolated) args.push('--ignore-user-config', '--skip-git-repo-check');
+    args.push('--output-schema', schemaPath, '-');
+    const env: NodeJS.ProcessEnv = { ...process.env, GIT_HOOKED_REVIEW: '1' };
+    if (isolated) {
+      env.PWD = executionCwd;
+      env.OLDPWD = executionCwd;
+      delete env.INIT_CWD;
+      delete env.npm_config_local_prefix;
+      delete env.npm_package_json;
+    }
+
     try {
       await writeFile(schemaPath, outputSchema, { encoding: 'utf8', mode: 0o600 });
-      const result = await this.run('codex', ['exec', '--ephemeral', '--sandbox', 'read-only', '--output-schema', schemaPath, '-'], {
-        cwd: this.cwd, input: prompt, timeout: timeoutMs, env: { ...process.env, GIT_HOOKED_REVIEW: '1' },
+      const result = await this.run('codex', args, {
+        cwd: executionCwd, input: prompt, timeout: timeoutMs, env,
       });
       if (result.exitCode !== 0) {
         const detail = result.stderr.trim().split('\n').slice(-12).join('\n').slice(-2_000);
@@ -46,7 +59,7 @@ export class CodexAdapter implements AgentAdapter {
     return normalizeAgentResult(agentReviewResultSchema.parse(parsed));
   }
   async proposeSecurity(input: SecurityProposalInput): Promise<SecurityProposalResult> {
-    const parsed = await this.structured(buildSecurityProposalPrompt(input), proposalSchema, input.timeoutMs);
+    const parsed = await this.structured(buildSecurityProposalPrompt(input), proposalSchema, input.timeoutMs, true);
     return securityProposalResultSchema.parse(parsed);
   }
   async fix(input: FixInput): Promise<FixResult> {

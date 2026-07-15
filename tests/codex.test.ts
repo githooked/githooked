@@ -45,7 +45,18 @@ describe('Codex adapter', () => {
       existingChecks: [], focus: ['database'], maxProposals: 3, timeoutMs: 1_000,
     });
     expect(result.proposals[0]?.id).toBe('tenant-isolation');
-    expect(run).toHaveBeenCalledWith('codex', expect.arrayContaining(['--sandbox', 'read-only']), expect.objectContaining({ input: expect.stringContaining('untrusted-repository-context') }));
+    expect(run).toHaveBeenCalledWith(
+      'codex',
+      expect.arrayContaining(['--sandbox', 'read-only', '--ignore-user-config', '--skip-git-repo-check']),
+      expect.objectContaining({
+        input: expect.stringContaining('untrusted-repository-context'),
+        cwd: expect.stringContaining('git-hooked-'),
+        env: expect.objectContaining({
+          PWD: expect.stringContaining('git-hooked-'),
+          OLDPWD: expect.stringContaining('git-hooked-'),
+        }),
+      }),
+    );
   });
   it.skipIf(process.env.GIT_HOOKED_CODEX_INTEGRATION !== '1')('completes a real read-only structured review', async () => {
     const result = await new CodexAdapter(undefined, process.cwd()).review({
