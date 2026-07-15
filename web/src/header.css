@@ -15,6 +15,17 @@
   object-fit: contain;
   transform: rotate(5deg) translate(-1px, -1px);
 }
+.github-nav {
+  display: inline-grid;
+  place-items: center;
+  font-size: 21px;
+}
+
+.github-nav .github-mark {
+  width: 21px;
+  height: 21px;
+}
+
 
 footer .brand-face {
   border-color: #626a64;

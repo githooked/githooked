@@ -1,12 +1,8 @@
-import './style.css';
-import './hooky.css';
-import './icons.css';
-import './header.css';
-import { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, createIcons, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } from 'lucide';
+import { ArrowRight, BookOpen, Bot, Check, CircleX, Coffee, Copy, createIcons, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } from 'lucide';
 import { bindNavigation } from './site';
 import { mountSiteHeader } from './header';
 
-const renderIcons = () => createIcons({ icons: { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } });
+const renderIcons = () => createIcons({ icons: { ArrowRight, BookOpen, Bot, Check, CircleX, Coffee, Copy, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } });
 
 mountSiteHeader('home');
 renderIcons();
@@ -18,11 +14,6 @@ document.querySelector<HTMLButtonElement>('.copy')?.addEventListener('click', as
   button.innerHTML = '<i data-lucide="check"></i>';
   renderIcons();
   setTimeout(() => { button.innerHTML = '<i data-lucide="copy"></i>'; renderIcons(); }, 1500);
-});
-
-document.querySelector<HTMLButtonElement>('#create-rule')?.addEventListener('click', () => {
-  const count = document.querySelector('#check-count');
-  if (count) count.textContent = '✓ Checks ready';
 });
 
 const hooky = document.querySelector<HTMLElement>('.hooky-stage');

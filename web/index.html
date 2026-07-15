@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/hooky.css">
+    <link rel="stylesheet" href="/src/icons.css">
+    <link rel="stylesheet" href="/src/header.css">
+    <link rel="stylesheet" href="/src/home-polish.css">
   </head>
   <body>
     <header class="nav wrap" data-site-header data-base="%BASE_URL%"></header>
@@ -18,8 +23,8 @@
           <div class="eyebrow pill"><i data-lucide="gift"></i> FREE · NO API KEY</div>
           <h1>Catch bad code<br>before you push.</h1>
           <p class="lede">Git hooks powered by the coding agent<br class="desktop"> you already use.</p>
-          <div class="actions"><a class="button" href="#install"><i data-lucide="download"></i> Install free</a><a class="text-link" href="https://github.com/githooked/githooked">View on GitHub</a></div>
-          <div class="agents"><span><i data-lucide="bot"></i> Codex CLI</span><span><i data-lucide="lock-keyhole"></i> Read-only review</span><span><i data-lucide="terminal"></i> Runs locally</span></div>
+          <div class="actions"><a class="button" href="#install"><i data-lucide="download"></i> Install</a><a class="text-link" href="https://github.com/githooked/githooked">View on GitHub</a></div>
+          <div class="agents"><span><i data-lucide="bot"></i> Codex CLI</span><span><i data-lucide="lock-keyhole"></i> No automatic edits</span><span><i data-lucide="terminal"></i> Runs locally</span></div>
         </div>
         <div class="hero-art">
           <div class="hooky-stage">
@@ -29,19 +34,25 @@
           </div>
         </div>
         <div class="terminal hero-terminal" aria-label="Example Git Hooked terminal output">
-          <div class="traffic"><i></i><i></i><i></i></div>
-          <code><span class="prompt"> push</span><br><br><i data-lucide="coffee"></i> <span class="green">Hooky checked 3 changed files.</span><br><i class="red" data-lucide="circle-x"></i> CRITICAL&nbsp; Booking query is missing tenant isolation<br><br>Check: multi-tenant-query-scoping<br><span class="red">Operation blocked.</span></code>
+          <div class="traffic"><i></i><i></i><i></i><span>pre-commit</span></div>
+          <code class="terminal-example">
+            <span class="terminal-command"><span class="prompt">$</span> git add .env &amp;&amp; git commit -m "add deploy config"</span>
+            <span class="terminal-check"><i data-lucide="coffee"></i> Hooky checked 4 staged files.</span>
+            <span class="terminal-alert"><i data-lucide="circle-x"></i><span><strong>.env cannot be committed</strong><small>Environment files often contain secrets.</small></span></span>
+            <span class="terminal-detail"><b>Check</b> builtin:env-files</span>
+            <span class="terminal-blocked">Commit blocked. Your .env stays local.</span>
+          </code>
         </div>
       </section>
 
       <section class="section" id="how">
         <div class="wrap">
-          <div class="section-head"><span class="kicker">HOW IT WORKS</span><h2>One folder. Your existing Codex CLI.</h2><p>Commit a tiny configuration folder and every developer gets the same checks.</p></div>
+          <div class="section-head"><span class="kicker">HOW IT WORKS</span><h2>Three steps. That’s it.</h2><p>Set it up once, then commit and push like normal.</p></div>
           <div class="steps-grid">
             <ol class="steps">
-              <li><b>01</b><div><strong>Connect Codex</strong><p>Git Hooked uses the authenticated Codex CLI already installed on your machine.</p></div></li>
-              <li><b>02</b><div><strong>Choose your hooks</strong><p>Run fast checks on commit and deeper AI review before push.</p></div></li>
-              <li><b>03</b><div><strong>Resolve real findings</strong><p>Hooky blocks critical issues; fix them yourself or deliberately run git-hooked fix.</p></div></li>
+              <li><b>01</b><div><strong>Run init</strong><p>One command adds Git hooks and starter checks.</p></div></li>
+              <li><b>02</b><div><strong>Work normally</strong><p>Commit and push as usual. Your checks run automatically.</p></div></li>
+              <li><b>03</b><div><strong>Fix what gets blocked</strong><p>Hooky explains the problem before your change reaches the remote.</p></div></li>
             </ol>
             <div class="terminal config-card"><div class="traffic"><i></i><i></i><i></i><span>.githooked/</span></div><code><span class="green">hooks/pre-commit.yml</span><br>&nbsp; checks:<br>&nbsp;&nbsp;&nbsp; - builtin:env-files<br>&nbsp;&nbsp;&nbsp; - builtin:conflict-markers<br><br><span class="green">hooks/pre-push.yml</span><br>&nbsp; checks:<br>&nbsp;&nbsp;&nbsp; - builtin:security-review<br>&nbsp;&nbsp;&nbsp; - check:tenant-isolation<br><br><span class="green">checks/tenant-isolation/</span><br>&nbsp; check.yml · instructions.md</code></div>
           </div>
@@ -61,12 +72,23 @@
 
       <section class="section rules-section" id="rules">
         <div class="wrap narrow">
-          <div class="section-head"><span class="kicker">PLAIN-ENGLISH RULES</span><h2>Write rules like you talk.</h2><p>Describe what matters in your codebase. Hooky turns it into a repeatable check.</p></div>
+          <div class="section-head"><span class="kicker">PLAIN-ENGLISH RULES</span><h2>Create a rule in one command.</h2><p>Describe the policy. Git Hooked plans the safest check and shows you everything before writing it.</p></div>
           <div class="rule-builder">
-            <div class="rule-input"><label for="rule">Tell Hooky what to check</label><textarea id="rule">Before every push, make sure new API routes require authentication and include tests.</textarea><button class="button" id="create-rule">Create checks</button></div>
-            <div class="arrow">→</div>
-            <div class="checks"><strong id="check-count">2 checks created</strong><div><i data-lucide="circle-check"></i> <span>New API routes require authentication</span></div><div><i data-lucide="circle-check"></i> <span>New API routes include tests</span></div><small>Runs automatically on pre-push</small></div>
-            <img src="/assets/hooky.png" alt="" class="peek" aria-hidden="true">
+            <div class="terminal rule-command">
+              <div class="traffic"><i></i><i></i><i></i><span>Terminal</span></div>
+              <code><span class="prompt">$</span> git-hooked rule add \<br><span class="rule-command-argument">&nbsp;&nbsp;"API responses must never expose accessToken"</span></code>
+            </div>
+            <div class="arrow" aria-hidden="true">→</div>
+            <div class="rule-plan">
+              <strong>Hooky builds the plan</strong>
+              <ol>
+                <li><span>01</span><div><strong>Understand</strong><small>Reads the rule and relevant repository context.</small></div></li>
+                <li><span>02</span><div><strong>Choose</strong><small>Uses an existing, deterministic, semantic, or hybrid check.</small></div></li>
+                <li><span>03</span><div><strong>Clarify</strong><small>Asks a focused question only when the answer changes the plan.</small></div></li>
+                <li><span>04</span><div><strong>Preview &amp; approve</strong><small>Shows every file and any generated code before creating it.</small></div></li>
+              </ol>
+              <div class="rule-ready"><i data-lucide="check"></i> Nothing changes until you approve.</div>
+            </div>
           </div>
         </div>
       </section>
