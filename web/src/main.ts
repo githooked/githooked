@@ -1,13 +1,13 @@
 import './style.css';
 import './hooky.css';
 import './icons.css';
-import { Bot, Check, CircleCheck, CircleX, Coffee, Copy, createIcons, Download, Gem, Gift, LockKeyhole, Menu, Sparkles, Terminal } from 'lucide';
+import { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, createIcons, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } from 'lucide';
+import { bindNavigation } from './site';
 
-const renderIcons = () => createIcons({ icons: { Bot, Check, CircleCheck, CircleX, Coffee, Copy, Download, Gem, Gift, LockKeyhole, Menu, Sparkles, Terminal } });
+const renderIcons = () => createIcons({ icons: { ArrowRight, BookOpen, Bot, Check, CircleCheck, CircleX, Coffee, Copy, Download, Gift, LibraryBig, LockKeyhole, Menu, Terminal } });
 
 renderIcons();
-
-document.querySelector<HTMLButtonElement>('.menu')?.addEventListener('click', () => document.querySelector('nav')?.classList.toggle('open'));
+bindNavigation();
 
 document.querySelector<HTMLButtonElement>('.copy')?.addEventListener('click', async (event) => {
   await navigator.clipboard.writeText('npx @githooked/cli init');

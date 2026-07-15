@@ -4,6 +4,8 @@ Catch bad code before you push using the coding-agent CLI you already have insta
 
 Git Hooked is a local, open-source Git hook orchestrator. It does not run an AI proxy, upload code to a Git Hooked server, collect telemetry, or require another API key.
 
+[Read the usage guide](https://githooked.github.io/githooked/docs/) · [Browse the built-in check library](https://githooked.github.io/githooked/library/)
+
 ## Two-minute setup
 
 Requirements: Node.js 22+, Git, and an authenticated Codex CLI.

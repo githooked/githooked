@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Browse the built-in checks and curated security and quality guide packs included with Git Hooked." />
+    <title>Check library — Git Hooked</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body class="docs-body">
+    <header class="nav wrap">
+      <a class="brand" href="../" aria-label="Git Hooked home"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a>
+      <nav aria-label="Main navigation">
+        <a href="../docs/">Docs</a><a href="./" aria-current="page">Library</a><a href="https://github.com/githooked/githooked">GitHub</a>
+      </nav>
+      <a class="button button-small" href="../docs/#quick-start"><i data-lucide="terminal"></i> Get started</a>
+      <button class="menu" type="button" aria-label="Open navigation" aria-expanded="false"><i data-lucide="menu"></i></button>
+    </header>
+
+    <main>
+      <section class="page-hero library-hero wrap">
+        <div class="hero-copy-wide">
+          <div>
+            <div class="breadcrumb"><a href="../">Home</a><span>/</span><span>Library</span></div>
+            <span class="kicker">CHECK LIBRARY</span>
+            <h1>Start with rules that already know the territory.</h1>
+            <p>Use the focused defaults, add a curated pack, or turn your own repository expectation into a check.</p>
+          </div>
+          <div class="catalog-summary" aria-label="Library summary">
+            <div><strong>6</strong><span>Built-ins</span></div>
+            <div><strong>5</strong><span>Guide packs</span></div>
+            <div><strong>17</strong><span>Pack rules</span></div>
+          </div>
+        </div>
+        <div class="catalog-tools">
+          <label class="catalog-search" for="catalog-search"><i data-lucide="search"></i><span class="sr-only">Search the check library</span><input id="catalog-search" type="search" placeholder="Search checks and packs…" autocomplete="off" /></label>
+          <div class="filter-list" role="group" aria-label="Filter library">
+            <button type="button" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" data-filter="security" aria-pressed="false">Security</button>
+            <button type="button" data-filter="quality" aria-pressed="false">Quality</button>
+            <button type="button" data-filter="deterministic" aria-pressed="false">Deterministic</button>
+            <button type="button" data-filter="semantic" aria-pressed="false">Semantic</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="catalog-main wrap">
+        <p id="catalog-status" class="sr-only" aria-live="polite"></p>
+        <section class="catalog-section" data-catalog-section>
+          <div class="catalog-section-head">
+            <div><span class="kicker">SHIPPED BY DEFAULT</span><h2>Built-in checks</h2></div>
+            <p>Built-ins use stable <code>builtin:&lt;id&gt;</code> references. The five marked “default” are configured by <code>git-hooked init</code>.</p>
+          </div>
+          <div id="builtin-grid" class="catalog-grid"></div>
+        </section>
+
+        <section class="catalog-section" data-catalog-section>
+          <div class="catalog-section-head">
+            <div><span class="kicker">INSTALL WHEN RELEVANT</span><h2>Curated guide packs</h2></div>
+            <p>Each pack expands into normal, editable Markdown and YAML checks on pre-push. Inspect a pack before adding it.</p>
+          </div>
+          <div id="guide-grid" class="catalog-grid"></div>
+        </section>
+
+        <div id="catalog-empty" class="catalog-empty"><strong>No library entries match that search.</strong><br>Try a broader term or reset the filters.</div>
+
+        <section class="custom-rule-card">
+          <div><span class="kicker">YOUR REPOSITORY, YOUR RULES</span><h2>Need something more specific?</h2><p>Create a semantic check from a plain-language expectation, then refine its committed instructions with your team.</p></div>
+          <a class="button" href="../docs/#custom-rules"><i data-lucide="arrow-right"></i> Add a custom rule</a>
+        </section>
+      </div>
+    </main>
+
+    <footer><div class="wrap footer-grid"><div><a class="brand" href="../"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your Codex CLI.</em></div><div><b>Product</b><a href="../docs/">Documentation</a><a href="./">Check library</a><a href="../#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="https://github.com/githooked/githooked/releases">Releases</a><a href="https://github.com/githooked/githooked/blob/main/LICENSE">MIT License</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="https://github.com/githooked/githooked/pulls">Contribute</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
+    <script type="module" src="/src/library.ts"></script>
+  </body>
+</html>

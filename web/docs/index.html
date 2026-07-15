@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Install Git Hooked, run local checks, add repository rules, and configure guide packs." />
+    <title>How to use Git Hooked — Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body class="docs-body">
+    <header class="nav wrap">
+      <a class="brand" href="../" aria-label="Git Hooked home"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a>
+      <nav aria-label="Main navigation">
+        <a href="./" aria-current="page">Docs</a><a href="../library/">Library</a><a href="https://github.com/githooked/githooked">GitHub</a>
+      </nav>
+      <a class="button button-small" href="#quick-start"><i data-lucide="terminal"></i> Get started</a>
+      <button class="menu" type="button" aria-label="Open navigation" aria-expanded="false"><i data-lucide="menu"></i></button>
+    </header>
+
+    <main>
+      <section class="page-hero wrap">
+        <div>
+          <div class="breadcrumb"><a href="../">Home</a><span>/</span><span>Documentation</span></div>
+          <span class="kicker">HOW TO USE IT</span>
+          <h1>From install to a protected push.</h1>
+          <p>Set up shared local checks in minutes, then grow them alongside your repository.</p>
+        </div>
+        <div class="requirements-card">
+          <span class="requirements-label">You will need</span>
+          <ul>
+            <li><i data-lucide="check"></i> Node.js 22 or newer</li>
+            <li><i data-lucide="check"></i> Git</li>
+            <li><i data-lucide="check"></i> An authenticated Codex CLI</li>
+          </ul>
+          <p>No Git Hooked account or additional API key.</p>
+        </div>
+      </section>
+
+      <div class="docs-layout wrap">
+        <aside class="docs-sidebar" aria-label="On this page">
+          <strong>On this page</strong>
+          <a href="#quick-start">Quick start</a>
+          <a href="#what-init-does">What init does</a>
+          <a href="#daily-workflow">Daily workflow</a>
+          <a href="#configure-hooks">Configure hooks</a>
+          <a href="#custom-rules">Custom rules</a>
+          <a href="#guide-packs">Guide packs</a>
+          <a href="#security-setup">Guided security setup</a>
+          <a href="#hook-managers">Hook managers</a>
+          <a href="#maintenance">Maintenance</a>
+        </aside>
+
+        <article class="docs-content">
+          <section id="quick-start" class="doc-section">
+            <span class="doc-step">01</span>
+            <h2>Quick start</h2>
+            <p>Install the CLI, move into a Git repository, and initialize the default checks.</p>
+            <div class="code-block">
+              <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy quick-start commands"><i data-lucide="copy"></i><span>Copy</span></button></div>
+              <pre><code>npm install --global @githooked/cli
+cd your-repository
+git-hooked init
+git-hooked check pre-push</code></pre>
+            </div>
+            <div class="callout callout-success"><i data-lucide="shield-check"></i><div><strong>That is enough to start.</strong><p>Future commits and pushes run the configured checks automatically. The manual check above lets you confirm the first setup immediately.</p></div></div>
+          </section>
+
+          <section id="what-init-does" class="doc-section">
+            <span class="doc-step">02</span>
+            <h2>What initialization adds</h2>
+            <p><code>git-hooked init</code> creates a reviewable <code>.githooked/</code> directory and managed blocks in the repository’s local Git hooks. Existing hook content is preserved, and running init again is safe.</p>
+            <div class="file-tree" aria-label="Generated configuration tree">
+              <code><strong>.githooked/</strong>
+├── config.yml
+└── hooks/
+    ├── pre-commit.yml
+    └── pre-push.yml</code>
+            </div>
+            <div class="split-notes">
+              <div><i data-lucide="zap"></i><strong>Pre-commit</strong><p>Fast deterministic checks for secrets, environment files, and conflict markers.</p></div>
+              <div><i data-lucide="bot"></i><strong>Pre-push</strong><p>Deeper semantic review for security issues and missing tests using Codex.</p></div>
+            </div>
+          </section>
+
+          <section id="daily-workflow" class="doc-section">
+            <span class="doc-step">03</span>
+            <h2>Your daily workflow</h2>
+            <p>Work normally. Git Hooked collects the relevant staged or outgoing diff, runs only the configured checks, and reports findings in the terminal.</p>
+            <ol class="workflow-list">
+              <li><span>1</span><div><strong>Commit</strong><p>Fast local checks catch mechanical mistakes before they enter history.</p></div></li>
+              <li><span>2</span><div><strong>Push</strong><p>Codex reviews the outgoing change in an ephemeral read-only sandbox.</p></div></li>
+              <li><span>3</span><div><strong>Resolve</strong><p>Fix blocking findings yourself, or deliberately run <code>git-hooked fix</code> for the latest completed review.</p></div></li>
+              <li><span>4</span><div><strong>Push again</strong><p>Successful unchanged semantic reviews are reused from the repository’s private Git cache.</p></div></li>
+            </ol>
+            <div class="callout"><i data-lucide="lock-keyhole"></i><div><strong>Local by design.</strong><p>Git Hooked has no hosted proxy and collects no telemetry. Agent review goes through the authenticated CLI already installed on your machine.</p></div></div>
+          </section>
+
+          <section id="configure-hooks" class="doc-section">
+            <span class="doc-step">04</span>
+            <h2>Choose which checks run</h2>
+            <p>Hook files are plain YAML. Reference shipped checks with <code>builtin:&lt;id&gt;</code> and repository-specific checks with <code>check:&lt;id&gt;</code>.</p>
+            <div class="code-block">
+              <div class="code-title"><span><i data-lucide="file-code-2"></i> .githooked/hooks/pre-push.yml</span><button type="button" data-copy aria-label="Copy hook configuration"><i data-lucide="copy"></i><span>Copy</span></button></div>
+              <pre><code>checks:
+  - builtin:security-review
+  - builtin:missing-tests
+  - builtin:breaking-changes
+  - check:tenant-isolation</code></pre>
+            </div>
+            <p class="next-link"><a href="../library/">Browse every built-in check and curated pack <i data-lucide="arrow-right"></i></a></p>
+          </section>
+
+          <section id="custom-rules" class="doc-section">
+            <span class="doc-step">05</span>
+            <h2>Add a repository rule</h2>
+            <p>Turn a plain-language expectation into a versioned semantic check. New rules are attached to pre-push by default.</p>
+            <div class="code-block">
+              <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy custom-rule command"><i data-lucide="copy"></i><span>Copy</span></button></div>
+              <pre><code>git-hooked rule add "Every database query must include tenantId"</code></pre>
+            </div>
+            <p>The command creates a new directory under <code>.githooked/checks/</code> with a <code>check.yml</code> manifest and editable <code>instructions.md</code>. Commit both so the whole team receives the same rule.</p>
+          </section>
+
+          <section id="guide-packs" class="doc-section">
+            <span class="doc-step">06</span>
+            <h2>Install a curated guide pack</h2>
+            <p>Packs bundle focused, auditable rules for common security and quality concerns. Inspect every rule and proposed file change before installing it.</p>
+            <div class="code-block">
+              <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy guide-pack commands"><i data-lucide="copy"></i><span>Copy</span></button></div>
+              <pre><code>git-hooked guide list
+git-hooked guide inspect security/multi-tenant
+git-hooked guide add security/multi-tenant</code></pre>
+            </div>
+            <p>Installed checks become ordinary Markdown and YAML under <code>.githooked/</code>. Removal refuses to delete a pack check that your team has edited locally.</p>
+          </section>
+
+          <section id="security-setup" class="doc-section">
+            <span class="doc-step">07</span>
+            <h2>Discover repository-specific security rules</h2>
+            <p>Guided setup maps the repository locally, then asks Codex for a bounded set of proposals. Start with dry-run mode to review the evidence and exact file changes.</p>
+            <div class="code-block">
+              <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy guided-setup commands"><i data-lucide="copy"></i><span>Copy</span></button></div>
+              <pre><code>git-hooked setup security --dry-run
+git-hooked setup security --focus auth,database --max-proposals 5</code></pre>
+            </div>
+            <p>Interactive mode asks before installing each proposal. Non-interactive and dry-run modes never modify <code>.githooked/</code>.</p>
+          </section>
+
+          <section id="hook-managers" class="doc-section">
+            <span class="doc-step">08</span>
+            <h2>Using an existing hook manager</h2>
+            <p>If Git Hooked detects Husky, Lefthook, or pre-commit, it creates the configuration but leaves the manager’s hooks untouched. Install the CLI as a development dependency and call it from the manager you already use.</p>
+            <div class="manager-grid">
+              <div><strong>Husky</strong><code>npx --no-install git-hooked check pre-commit</code></div>
+              <div><strong>Lefthook</strong><code>run: npx --no-install git-hooked check pre-push</code></div>
+              <div><strong>pre-commit</strong><code>entry: npx --no-install git-hooked check pre-commit</code></div>
+            </div>
+            <p><a class="inline-link" href="https://github.com/githooked/githooked#existing-hook-managers">See complete manager configurations on GitHub <i data-lucide="external-link"></i></a></p>
+          </section>
+
+          <section id="maintenance" class="doc-section">
+            <span class="doc-step">09</span>
+            <h2>Diagnose, repair, or remove</h2>
+            <div class="command-list">
+              <div><code>git-hooked doctor</code><span>Check the repository, configuration, hooks, and agent.</span></div>
+              <div><code>git-hooked doctor --test-agent</code><span>Also run a basic read-only Codex invocation.</span></div>
+              <div><code>git-hooked fix</code><span>Deliberately fix findings from the latest completed review.</span></div>
+              <div><code>git-hooked uninstall</code><span>Remove managed hook blocks and keep configuration.</span></div>
+              <div><code>git-hooked uninstall --remove-config</code><span>Remove managed hooks and the configuration directory.</span></div>
+            </div>
+            <div class="callout callout-warning"><i data-lucide="triangle-alert"></i><div><strong>Need an explicit one-off bypass?</strong><p>Run <code>GIT_HOOKED_SKIP=1 git push</code>. Git Hooked prints a visible warning and does not present the skipped review as successful.</p></div></div>
+          </section>
+
+          <section class="doc-cta">
+            <div><span class="kicker">NEXT</span><h2>Pick checks for your repository.</h2><p>Explore the shipped checks and installable packs, with exact IDs and commands.</p></div>
+            <a class="button" href="../library/"><i data-lucide="library-big"></i> Open the library</a>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer><div class="wrap footer-grid"><div><a class="brand" href="../"><span class="brand-face"><i data-lucide="coffee"></i></span><span>git hooked</span></a><p>Catch bad code before you push.</p><em>Free forever. Bring your Codex CLI.</em></div><div><b>Product</b><a href="./">Documentation</a><a href="../library/">Check library</a><a href="../#install">Install</a></div><div><b>Project</b><a href="https://github.com/githooked/githooked">GitHub</a><a href="https://github.com/githooked/githooked/releases">Releases</a><a href="https://github.com/githooked/githooked/blob/main/LICENSE">MIT License</a></div><div><b>Community</b><a href="https://github.com/githooked/githooked/issues">Issues</a><a href="https://github.com/githooked/githooked/pulls">Contribute</a></div></div><div class="wrap footnote"><span>Built with too much coffee.</span><span>© 2026 Git Hooked</span></div></footer>
+    <script type="module" src="/src/docs.ts"></script>
+  </body>
+</html>
