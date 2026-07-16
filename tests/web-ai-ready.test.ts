@@ -21,6 +21,7 @@ describe('AI-readable website', () => {
 
   it('offers a safe, copyable installation prompt for coding agents', async () => {
     const html = await readFile('web/index.html', 'utf8');
+    const docs = await readFile('web/docs/index.html', 'utf8');
     const script = await readFile('web/src/main.ts', 'utf8');
     expect(html).toContain('Copy and paste this into your coding agent.');
     expect(html).toContain('data-copy-agent');
@@ -29,5 +30,7 @@ describe('AI-readable website', () => {
     expect(script).toContain("document.querySelector<HTMLButtonElement>('[data-copy-agent]')");
     expect(script).toContain("navigator.clipboard.writeText(value)");
     expect(script).toContain("document.execCommand('copy')");
+    expect(docs).toContain('npm install --save-dev @githooked/cli');
+    expect(docs).not.toContain('npm install --global @githooked/cli');
   });
 });

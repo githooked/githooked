@@ -11,10 +11,10 @@ Git Hooked is a local, open-source Git hook orchestrator. It does not run an AI 
 Requirements: Node.js 22+, Git, and at least one authenticated supported agent CLI: Codex, Claude Code, Gemini CLI, GitHub Copilot CLI, or Cursor Agent.
 
 ```bash
-npm install --global @githooked/cli
 cd your-repository
-git-hooked init
-git-hooked check pre-push
+npm install --save-dev @githooked/cli
+npx git-hooked init
+npx git-hooked check pre-push
 ```
 
 Initialization creates a `.githooked/` configuration directory and safely adds managed blocks to `.git/hooks/pre-commit` and `.git/hooks/pre-push`. Existing hook content is preserved, and initialization is idempotent.

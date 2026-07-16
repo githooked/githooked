@@ -58,10 +58,10 @@
             <p>Install the CLI, move into a Git repository, and initialize the default checks.</p>
             <div class="code-block">
               <div class="code-title"><span><i data-lucide="terminal"></i> Terminal</span><button type="button" data-copy aria-label="Copy quick-start commands"><i data-lucide="copy"></i><span>Copy</span></button></div>
-              <pre><code>npm install --global @githooked/cli
-cd your-repository
-git-hooked init
-git-hooked check pre-push</code></pre>
+              <pre><code>cd your-repository
+npm install --save-dev @githooked/cli
+npx git-hooked init
+npx git-hooked check pre-push</code></pre>
             </div>
             <div class="callout callout-success"><i data-lucide="shield-check"></i><div><strong>That is enough to start.</strong><p>Future commits and pushes run the configured checks automatically. The manual check above lets you confirm the first setup immediately.</p></div></div>
           </section>

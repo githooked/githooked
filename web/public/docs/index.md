@@ -11,13 +11,13 @@ No Git Hooked account or additional API key is required.
 ## Quick start
 
 ```sh
-npm install --global @githooked/cli
 cd your-repository
-git-hooked init
-git-hooked check pre-push
+npm install --save-dev @githooked/cli
+npx git-hooked init
+npx git-hooked check pre-push
 ```
 
-For a repository-pinned installation, use `npm install --save-dev @githooked/cli` followed by `npx git-hooked init`. Native hooks prefer this local executable and fall back to a global installation.
+Native hooks prefer this repository-pinned executable and fall back to a global installation when one is available.
 
 Initialization creates `.githooked/config.yml`, hook configuration, and managed blocks in local Git hooks. Existing hook content is preserved and repeated initialization is safe. If Husky, Lefthook, or pre-commit is detected, Git Hooked leaves that manager's hooks untouched and prints integration instructions.
 
