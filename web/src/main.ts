@@ -8,12 +8,39 @@ mountSiteHeader('home');
 renderIcons();
 bindNavigation();
 
-document.querySelector<HTMLButtonElement>('.copy')?.addEventListener('click', async (event) => {
-  await navigator.clipboard.writeText('npx @githooked/cli init');
-  const button = event.currentTarget as HTMLButtonElement;
-  button.innerHTML = '<i data-lucide="check"></i>';
+const copyText = async (value: string) => {
+  try {
+    await navigator.clipboard.writeText(value);
+  } catch {
+    const temporary = document.createElement('textarea');
+    temporary.value = value;
+    temporary.setAttribute('readonly', '');
+    temporary.style.position = 'fixed';
+    temporary.style.opacity = '0';
+    document.body.append(temporary);
+    temporary.select();
+    document.execCommand('copy');
+    temporary.remove();
+  }
+};
+
+const copyWithFeedback = async (button: HTMLButtonElement, value: string, copiedLabel?: string) => {
+  await copyText(value);
+  const original = button.innerHTML;
+  button.innerHTML = `<i data-lucide="check"></i>${copiedLabel ? `<span>${copiedLabel}</span>` : ''}`;
   renderIcons();
-  setTimeout(() => { button.innerHTML = '<i data-lucide="copy"></i>'; renderIcons(); }, 1500);
+  setTimeout(() => { button.innerHTML = original; renderIcons(); }, 1500);
+};
+
+document.querySelector<HTMLButtonElement>('[data-copy-command]')?.addEventListener('click', async (event) => {
+  const button = event.currentTarget as HTMLButtonElement;
+  await copyWithFeedback(button, 'npm install --save-dev @githooked/cli\nnpx git-hooked init');
+});
+
+document.querySelector<HTMLButtonElement>('[data-copy-agent]')?.addEventListener('click', async (event) => {
+  const button = event.currentTarget as HTMLButtonElement;
+  const prompt = document.querySelector<HTMLElement>('#agent-install-prompt')?.textContent?.trim();
+  if (prompt) await copyWithFeedback(button, prompt, 'Copied!');
 });
 
 const hooky = document.querySelector<HTMLElement>('.hooky-stage');

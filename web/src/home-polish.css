@@ -23,6 +23,77 @@
   box-shadow: 0 0 0 3px #72db3820;
 }
 
+.agent-install {
+  margin: -8px 0 34px;
+  padding: 16px;
+  border: 1px solid #cfc1b1;
+  border-radius: 14px;
+  background: #fffaf4;
+  box-shadow: 0 8px 22px #3b2a1d0c;
+}
+
+.agent-install-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 11px;
+}
+
+.agent-install-heading > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.agent-install-heading > span .lucide {
+  width: 17px;
+  color: #438f22;
+}
+
+.agent-install-heading small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.agent-install-prompt {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 8px 8px 15px;
+  border: 1px solid #dfd3c6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.agent-install-prompt p {
+  margin: 0;
+  color: #4e4943;
+  font: 12px/1.55 'DM Mono', monospace;
+}
+
+.agent-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 128px;
+  padding: 11px 13px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--deep);
+  color: #fff;
+  font: 700 12px Manrope, sans-serif;
+  cursor: pointer;
+}
+
+.agent-copy .lucide {
+  width: 16px;
+}
+
 .scroll-hooky {
   opacity: 0;
   pointer-events: none;
@@ -365,6 +436,21 @@
 }
 
 @media (max-width: 800px) {
+  .agent-install-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .agent-install-prompt {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .agent-copy {
+    width: 100%;
+  }
+
   .terminal-example {
     gap: 13px;
   }

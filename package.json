@@ -1,6 +1,6 @@
 {
   "name": "@githooked/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Catch bad code before you push using the coding agent you already have.",
   "license": "MIT",
   "repository": {

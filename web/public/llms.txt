@@ -1,0 +1,25 @@
+# Git Hooked
+
+> Git Hooked is a free, open-source Git hook orchestrator that catches security, testing, and compatibility issues before commit or push using an authenticated coding-agent CLI already installed on the user's machine.
+
+Git Hooked runs locally, has no hosted AI proxy, collects no telemetry, and requires no additional API key. It supports Codex, Claude Code, Gemini CLI, GitHub Copilot CLI, and Cursor Agent.
+
+## Install
+
+Requires Node.js 22+, Git, a Git repository, and at least one authenticated supported agent CLI.
+
+```sh
+npm install --save-dev @githooked/cli
+npx git-hooked init
+```
+
+## Pages
+
+- [Home](https://githooked.github.io/githooked/index.md): Product overview, installation, workflow, and plain-language rules.
+- [Documentation](https://githooked.github.io/githooked/docs/index.md): Complete setup, configuration, custom rules, guide packs, hook managers, and maintenance commands.
+- [Check library](https://githooked.github.io/githooked/library/index.md): Built-in checks and curated security and quality guide packs.
+
+## Source
+
+- [GitHub repository](https://github.com/githooked/githooked): Source, README, issues, and releases.
+- [License](https://github.com/githooked/githooked/blob/main/LICENSE): MIT License.

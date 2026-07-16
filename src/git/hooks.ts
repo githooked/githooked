@@ -5,18 +5,37 @@ const START = '# >>> git-hooked managed >>>';
 const END = '# <<< git-hooked managed <<<';
 
 function block(hook: string): string {
-  return `${START}\nif [ "\${GIT_HOOKED_SKIP:-}" = "1" ]; then\n  echo "WARNING: Git Hooked check bypassed via GIT_HOOKED_SKIP=1" >&2\nelse\n  git-hooked check ${hook} "$@" || exit $?\nfi\n${END}`;
+  return `${START}
+if [ "\${GIT_HOOKED_SKIP:-}" = "1" ]; then
+  echo "WARNING: Git Hooked check bypassed via GIT_HOOKED_SKIP=1" >&2
+else
+  GIT_HOOKED_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit $?
+  GIT_HOOKED_LOCAL="$GIT_HOOKED_ROOT/node_modules/.bin/git-hooked"
+  if [ -x "$GIT_HOOKED_LOCAL" ]; then
+    "$GIT_HOOKED_LOCAL" check ${hook} "$@" || exit $?
+  elif command -v git-hooked >/dev/null 2>&1; then
+    git-hooked check ${hook} "$@" || exit $?
+  else
+    echo "Git Hooked CLI not found. Run: npm install --save-dev @githooked/cli" >&2
+    exit 127
+  fi
+fi
+${END}`;
+}
+
+function managedPattern(): RegExp {
+  return new RegExp(`${START.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}[\\s\\S]*?${END.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}`);
 }
 
 export function addManagedBlock(content: string, hook: string): string {
   if (content.includes(START) !== content.includes(END)) throw new Error(`The ${hook} hook contains an incomplete Git Hooked managed block.`);
-  if (content.includes(START)) return content;
+  if (content.includes(START)) return content.replace(managedPattern(), block(hook));
   const prefix = content.length === 0 ? '#!/bin/sh\n' : content.endsWith('\n') ? content : `${content}\n`;
   return `${prefix}${block(hook)}\n`;
 }
 
 export function removeManagedBlock(content: string): string {
-  const pattern = new RegExp(`\\n?${START.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}[\\s\\S]*?${END.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\n?`);
+  const pattern = new RegExp(`\\n?${managedPattern().source}\\n?`);
   return content.replace(pattern, '\n').replace(/^\n/, '');
 }
 

@@ -20,4 +20,9 @@ describe('deterministic checks', () => {
     const result = await runDeterministicChecks('/repo', { content: '', files: [], partial: false }, ['secrets'], run);
     expect(result.notices[0]).toContain('not installed');
   });
+  it('treats a missing executable from the real process runner as unavailable', async () => {
+    const result = await runDeterministicChecks('/repo', { content: '', files: [], partial: false }, ['secrets']);
+    expect(result.findings).toEqual([]);
+    expect(result.notices[0]).toContain('not installed');
+  });
 });

@@ -34,7 +34,8 @@ describe('shared website header', () => {
     expect(html).toContain('Checks run automatically.');
     for (const agent of ['Codex', 'Claude Code', 'Gemini CLI', 'Copilot CLI', 'Cursor Agent']) expect(html).toContain(agent);
     expect(html).toContain('Coding agent detected: Codex');
-    expect(html).toContain('npx @githooked/cli init');
+    expect(html).toContain('npm install --save-dev @githooked/cli');
+    expect(html).toContain('npx git-hooked init');
     expect(html).toContain('&lt;user creates src/api.ts&gt;');
     expect(html).toContain('git add src/api.ts');
     expect(html).toContain('accessToken exposed in API response');
