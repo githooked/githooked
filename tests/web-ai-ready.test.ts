@@ -26,7 +26,7 @@ describe('AI-readable website', () => {
     expect(html).toContain('Copy and paste this into your coding agent.');
     expect(html).toContain('data-copy-agent');
     expect(html).toContain('Do not bypass any safety checks.');
-    expect(html).toContain('as a development dependency');
+    expect(html).toContain('Then run npm install --save-dev @githooked/cli followed by npx git-hooked init.');
     expect(script).toContain("document.querySelector<HTMLButtonElement>('[data-copy-agent]')");
     expect(script).toContain("navigator.clipboard.writeText(value)");
     expect(script).toContain("document.execCommand('copy')");

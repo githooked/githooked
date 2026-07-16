@@ -17,7 +17,7 @@ The default `auto` provider scans for supported agent CLIs and uses the first av
 
 ### Prompt for an AI coding agent
 
-> Install Git Hooked in this repository as a development dependency, then run `npx git-hooked init`. Verify Node.js 22+, Git, and a supported coding-agent CLI first. Review the files and hooks it creates, then tell me what was installed and which agent was detected. Do not bypass any safety checks.
+> Install Git Hooked in this repository. First verify Node.js 22+, Git, and a supported coding-agent CLI. Then run `npm install --save-dev @githooked/cli` followed by `npx git-hooked init`. Review the files and hooks it creates, then tell me what was installed and which agent was detected. Do not bypass any safety checks.
 
 ## How it works
 
