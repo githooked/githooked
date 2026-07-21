@@ -6,6 +6,12 @@ Git Hooked is a local, open-source Git hook orchestrator. It does not run an AI 
 
 [Read the usage guide](https://githooked.github.io/githooked/docs/) · [Browse the built-in check library](https://githooked.github.io/githooked/library/)
 
+## How we used GPT-5.6 and Codex
+
+We used GPT-5.6 in ChatGPT to plan Git Hooked, shape the product workflow, and turn the idea into clear implementation instructions. We then copied those instructions into Codex and used it as the coding agent to build, test, and refine the project.
+
+Codex is also part of Git Hooked itself. At runtime, Git Hooked gives Codex the repository rules we define, the relevant diff, and a bounded read-only view of the codebase. Codex acts as the coding agent that applies those rules to each change and returns a structured pass, warning, or failure before the code is committed or pushed.
+
 ## Two-minute setup
 
 Requirements: Node.js 22+, Git, and at least one authenticated supported agent CLI: Codex, Claude Code, Gemini CLI, GitHub Copilot CLI, or Cursor Agent.
